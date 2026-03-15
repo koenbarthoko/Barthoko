@@ -895,6 +895,149 @@
       min-height: 16px;
     }
 
+    /* HERO INVESTORS */
+    .hero-investors {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .hero-investors-label {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    #hero-investors-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .hero-investor-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .hero-investor-row:last-child {
+      border-bottom: none;
+    }
+
+    .hero-investor-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--cream);
+    }
+
+    .hero-investor-tier {
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      opacity: 0.8;
+    }
+
+    .hero-investor-placeholder {
+      font-size: 11px;
+      color: var(--muted);
+      font-style: italic;
+      padding: 8px 0;
+    }
+
+    /* INVESTORS SECTION */
+    .investors-section {
+      padding: 40px 80px 80px;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .investors-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 38px;
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+
+    .investors-sub {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .investors-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--border);
+    }
+
+    .investor-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+
+    .investor-row:last-child { border-bottom: none; }
+    .investor-row:hover { background: var(--cream); }
+
+    .investor-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--ink);
+    }
+
+    .investor-tier {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding: 3px 8px;
+      border: 1px solid var(--accent);
+      opacity: 0.7;
+    }
+
+    .investor-placeholder {
+      padding: 32px 24px;
+      font-size: 11px;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* VISIBILITY CHECKBOX */
+    .visibility-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 4px 0;
+    }
+
+    .visibility-label input[type="checkbox"] {
+      width: 14px;
+      height: 14px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    @media (max-width: 900px) {
+      .investors-section { grid-template-columns: 1fr; gap: 32px; padding: 40px 32px 60px; }
+    }
+
     /* RESPONSIVE */
     @media (max-width: 900px) {
       .quickpay-inner { grid-template-columns: 1fr; gap: 40px; }
@@ -937,6 +1080,13 @@
       </div>
       <div class="progress-label" style="justify-content:flex-start; gap:20px;">
         <span><strong style="color:var(--cream)" id="investor-count">0</strong> investeerders</span>
+      </div>
+    </div>
+
+    <div class="hero-investors" id="hero-investors-block">
+      <div class="hero-investors-label">Zij doen al mee</div>
+      <div id="hero-investors-list">
+        <div class="hero-investor-placeholder">Nog geen publieke investeerders</div>
       </div>
     </div>
 
@@ -1182,6 +1332,20 @@
 </section>
 
 
+<!-- INVESTORS -->
+<div class="section-divider"><span>Onze investeerders</span></div>
+
+<section class="investors-section">
+  <div class="investors-header">
+    <h2 class="investors-title">Zij doen<br/>al mee</h2>
+    <p class="investors-sub">Elke investeerder maakt Bar THOKO mogelijk. Jij ook?</p>
+  </div>
+  <div class="investors-list" id="investors-list">
+    <div class="investor-placeholder">Nog geen publieke investeerders — wees de eerste.</div>
+  </div>
+</section>
+
+
 <div class="footer-note">
   <span>© Bar THOKO — Nijmegen</span>
   <span>Thomas & Koen · Founding Round 2026</span>
@@ -1199,10 +1363,14 @@
       <span id="modal-return-detail">—</span>
     </div>
     <div class="modal-form">
-      <input class="form-input" type="text" placeholder="Voornaam" />
-      <input class="form-input" type="text" placeholder="Achternaam" />
-      <input class="form-input" type="email" placeholder="E-mailadres" />
-      <input class="form-input" type="tel" placeholder="Telefoonnummer (optioneel)" />
+      <input class="form-input" id="modal-firstname" type="text" placeholder="Voornaam" />
+      <input class="form-input" id="modal-lastname" type="text" placeholder="Achternaam" />
+      <input class="form-input" id="modal-email" type="email" placeholder="E-mailadres" />
+      <input class="form-input" id="modal-phone" type="tel" placeholder="Telefoonnummer (optioneel)" />
+      <label class="visibility-label">
+        <input type="checkbox" id="modal-visible" checked />
+        <span>Toon mij op de investeerderspagina</span>
+      </label>
       <button class="btn-invest" onclick="submitInvestment()">Betalingspagina →</button>
       <p class="modal-disclaimer">Je wordt doorgestuurd naar iDEAL. Na betaling hoor je zo snel mogelijk van ons. Door te betalen ga je akkoord met de algemene voorwaarden van Bar THOKO.</p>
     </div>
@@ -1340,11 +1508,10 @@
 
   // ── MODAL submitInvestment — zelfde backend endpoint ──────────
   function submitInvestment() {
-    const modal = document.getElementById('modal');
-    const inputs = modal.querySelectorAll('.form-input');
-    const firstname = inputs[0].value.trim();
-    const lastname  = inputs[1].value.trim();
-    const email     = inputs[2].value.trim();
+    const firstname = document.getElementById('modal-firstname').value.trim();
+    const lastname  = document.getElementById('modal-lastname').value.trim();
+    const email     = document.getElementById('modal-email').value.trim();
+    const visible   = document.getElementById('modal-visible').checked;
     if (!selectedTier || !firstname || !lastname || !email) {
       alert('Vul alle velden in en selecteer een tier.');
       return;
@@ -1352,12 +1519,46 @@
     fetch('/.netlify/functions/create-payment', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ tier: selectedTier, amount: tierAmounts[selectedTier], firstname, lastname, email })
+      body: JSON.stringify({ tier: selectedTier, amount: tierAmounts[selectedTier], firstname, lastname, email, visible })
     })
     .then(r => r.json())
     .then(data => { if (data.checkoutUrl) window.location.href = data.checkoutUrl; else alert('Fout: ' + (data.error || '')); })
     .catch(() => alert('Betaling kon niet worden gestart. Probeer het opnieuw.'));
   }
+
+  // ── INVESTORS LIST ────────────────────────────────────────────
+  async function fetchInvestors() {
+    try {
+      const res = await fetch('/.netlify/functions/get-investors');
+      if (!res.ok) return;
+      const data = await res.json();
+      if (!data.investors || data.investors.length === 0) return;
+
+      const heroList = document.getElementById('hero-investors-list');
+      const sectionList = document.getElementById('investors-list');
+
+      const rowsHtml = data.investors.map(inv => `
+        <div class="hero-investor-row">
+          <span class="hero-investor-name">${inv.name}</span>
+          <span class="hero-investor-tier">${inv.tier}</span>
+        </div>
+      `).join('');
+
+      if (heroList) heroList.innerHTML = rowsHtml;
+
+      if (sectionList) {
+        sectionList.innerHTML = data.investors.map(inv => `
+          <div class="investor-row">
+            <span class="investor-name">${inv.name}</span>
+            <span class="investor-tier">${inv.tier}</span>
+          </div>
+        `).join('');
+      }
+    } catch(e) {}
+  }
+
+  fetchInvestors();
+  setInterval(fetchInvestors, 30000);
 
   window.addEventListener('load', () => {
     setTimeout(() => {
