@@ -1314,7 +1314,7 @@
     btn.textContent = 'Bezig met laden…';
 
     try {
-      const res = await fetch('/api/create-payment', {
+      const res = await fetch('/.netlify/functions/create-payment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1349,7 +1349,7 @@
       alert('Vul alle velden in en selecteer een tier.');
       return;
     }
-    fetch('/api/create-payment', {
+    fetch('/.netlify/functions/create-payment', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ tier: selectedTier, amount: tierAmounts[selectedTier], firstname, lastname, email })
@@ -1367,7 +1367,7 @@
 
   async function fetchProgress() {
     try {
-      const res = await fetch('/api/invest');
+      const res = await fetch('/.netlify/functions/invest');
       if (!res.ok) {
         updateProgressUI(100000, 2);
         return;
