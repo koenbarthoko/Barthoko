@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Investeer in Bar THOKO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #1a1712;
+      --paper: #f5f0e8;
+      --cream: #ede7d9;
+      --accent: #c4502a;
+      --accent-light: #e8957a;
+      --gold: #b8963e;
+      --muted: #7a7468;
+      --border: #d4cdc0;
+      --white: #faf8f4;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Mono', monospace;
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* NOISE TEXTURE OVERLAY */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.5;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      background: var(--ink);
+      padding: 80px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .hero-left::after {
+      content: '';
+      position: absolute;
+      right: -1px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--accent);
+    }
+
+    .logo-area {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .logo-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 72px;
+      font-weight: 300;
+      color: var(--white);
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+    }
+
+    .logo em {
+      font-style: italic;
+      color: var(--accent-light);
+    }
+
+    .hero-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--cream);
+      line-height: 1.5;
+      max-width: 340px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .hero-meta span {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .hero-meta strong {
+      color: var(--accent-light);
+      font-weight: 400;
+    }
+
+    /* PROGRESS BAR IN HERO */
+    .progress-block {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--cream);
+    }
+
+    .progress-bar {
+      height: 2px;
+      background: rgba(255,255,255,0.1);
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+      transition: width 2s ease;
+    }
+
+    /* HERO RIGHT — CTA */
+    .hero-right {
+      background: var(--white);
+      padding: 80px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    .cta-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--ink);
+    }
+
+    .cta-sub {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 380px;
+    }
+
+    /* TIER SELECTOR */
+    .tier-selector {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .tier-selector label {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .tier-options {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+
+    .tier-btn {
+      border: 1px solid var(--border);
+      background: transparent;
+      padding: 12px 6px;
+      cursor: pointer;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--ink);
+      text-align: center;
+      transition: all 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      align-items: center;
+    }
+
+    .tier-btn:hover {
+      border-color: var(--accent);
+      background: var(--cream);
+    }
+
+    .tier-btn.active {
+      border-color: var(--accent);
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .tier-btn .tier-amount {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .tier-btn .tier-label {
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      opacity: 0.7;
+    }
+
+    /* DYNAMIC RETURN DISPLAY */
+    .return-display {
+      background: var(--cream);
+      border-left: 2px solid var(--accent);
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 100px;
+    }
+
+    .return-type {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .return-main {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--ink);
+    }
+
+    .return-detail {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .return-rewards {
+      margin-top: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .reward-item {
+      font-size: 10px;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .reward-item::before {
+      content: '—';
+      color: var(--accent);
+      font-size: 10px;
+    }
+
+    /* FORM */
+    .invest-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .form-input {
+      border: 1px solid var(--border);
+      background: transparent;
+      padding: 12px 14px;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.15s;
+      width: 100%;
+    }
+
+    .form-input:focus {
+      border-color: var(--accent);
+    }
+
+    .form-input::placeholder {
+      color: var(--muted);
+    }
+
+    .btn-invest {
+      background: var(--accent);
+      color: var(--white);
+      border: none;
+      padding: 18px 24px;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.15s;
+      width: 100%;
+    }
+
+    .btn-invest:hover {
+      background: var(--ink);
+    }
+
+    .form-disclaimer {
+      font-size: 9px;
+      color: var(--muted);
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    /* DIVIDER */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 60px 80px 0;
+    }
+
+    .section-divider span {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* TIER TABLE */
+    .tiers-section {
+      padding: 40px 80px 80px;
+    }
+
+    .tiers-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border: 1px solid var(--border);
+      margin-top: 40px;
+    }
+
+    .tier-card {
+      padding: 32px 24px;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+
+    .tier-card:last-child { border-right: none; }
+    .tier-card:hover { background: var(--cream); }
+
+    .tier-card.featured {
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .tier-card.featured .tier-card-name,
+    .tier-card.featured .tier-card-amount,
+    .tier-card.featured .tier-card-rewards li {
+      color: var(--white);
+    }
+
+    .tier-card.featured .tier-card-meta {
+      color: var(--accent-light);
+    }
+
+    .tier-card.featured .tier-card-rewards li::marker {
+      color: var(--accent);
+    }
+
+    .tier-featured-badge {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-family: 'DM Mono', monospace;
+    }
+
+    .tier-card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      font-style: italic;
+    }
+
+    .tier-card-amount {
+      font-size: 28px;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+    }
+
+    .tier-card-meta {
+      font-size: 10px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .tier-card-meta strong {
+      display: block;
+      font-weight: 500;
+    }
+
+    .tier-card-type {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border: 1px solid currentColor;
+      display: inline-block;
+      opacity: 0.6;
+    }
+
+    .tier-card-rewards {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: auto;
+    }
+
+    .tier-card-rewards li {
+      font-size: 10px;
+      color: var(--muted);
+      padding-left: 14px;
+      position: relative;
+    }
+
+    .tier-card-rewards li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    .tier-card.featured .tier-card-rewards li {
+      color: var(--cream);
+    }
+
+    /* SECOND ROW OF TIERS */
+    .tiers-grid-row2 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border: 1px solid var(--border);
+      border-top: none;
+    }
+
+    /* HOW IT WORKS */
+    .how-section {
+      padding: 0 80px 80px;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .how-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.1;
+      position: sticky;
+      top: 40px;
+    }
+
+    .how-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .how-step {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 24px;
+      padding: 32px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .how-step:last-child { border-bottom: none; }
+
+    .step-num {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      padding-top: 3px;
+    }
+
+    .step-content h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+
+    .step-content p {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    /* FOOTER CTA */
+    .footer-cta {
+      background: var(--ink);
+      padding: 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .footer-cta-text h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .footer-cta-text p {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 340px;
+    }
+
+    .footer-cta-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-cta-form .form-input {
+      border-color: rgba(255,255,255,0.15);
+      color: var(--white);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .footer-cta-form .form-input::placeholder {
+      color: rgba(255,255,255,0.3);
+    }
+
+    .footer-cta-form .form-input:focus {
+      border-color: var(--accent);
+    }
+
+    .footer-note {
+      background: var(--ink);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 24px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-note span {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(26,23,18,0.85);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--white);
+      max-width: 480px;
+      width: 90%;
+      padding: 48px;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+    }
+
+    .modal h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+
+    .modal-tier-info {
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .modal-return-box {
+      background: var(--cream);
+      border-left: 2px solid var(--accent);
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .modal-return-box strong {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      color: var(--ink);
+      font-weight: 400;
+      margin-bottom: 4px;
+    }
+
+    .modal-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .modal-disclaimer {
+      font-size: 9px;
+      color: var(--muted);
+      line-height: 1.7;
+      text-align: center;
+      margin-top: 6px;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-left > * {
+      animation: fadeUp 0.6s ease forwards;
+      opacity: 0;
+    }
+
+    .hero-left > *:nth-child(1) { animation-delay: 0.1s; }
+    .hero-left > *:nth-child(2) { animation-delay: 0.25s; }
+    .hero-left > *:nth-child(3) { animation-delay: 0.4s; }
+    .hero-left > *:nth-child(4) { animation-delay: 0.55s; }
+
+    .hero-right > * {
+      animation: fadeUp 0.6s ease forwards;
+      opacity: 0;
+    }
+
+    .hero-right > *:nth-child(1) { animation-delay: 0.3s; }
+    .hero-right > *:nth-child(2) { animation-delay: 0.4s; }
+    .hero-right > *:nth-child(3) { animation-delay: 0.5s; }
+    .hero-right > *:nth-child(4) { animation-delay: 0.6s; }
+    .hero-right > *:nth-child(5) { animation-delay: 0.7s; }
+    .hero-right > *:nth-child(6) { animation-delay: 0.8s; }
+
+    /* QUICK PAY SECTION */
+    .quickpay-section {
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+      padding: 60px 80px;
+    }
+
+    .quickpay-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .quickpay-left h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 38px;
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+
+    .quickpay-left p {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 360px;
+    }
+
+    .quickpay-tiers {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin-top: 32px;
+    }
+
+    .qp-tier {
+      border: 1px solid var(--border);
+      background: var(--white);
+      padding: 14px 8px 12px;
+      cursor: pointer;
+      font-family: 'DM Mono', monospace;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: center;
+      transition: all 0.15s ease;
+    }
+
+    .qp-tier:hover {
+      border-color: var(--accent);
+      background: var(--white);
+    }
+
+    .qp-tier.active {
+      border-color: var(--accent);
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .qp-tier .qp-amount {
+      font-size: 15px;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+    }
+
+    .qp-tier .qp-name {
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.65;
+    }
+
+    .qp-tier .qp-badge {
+      font-size: 8px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 2px;
+    }
+
+    .qp-tier.active .qp-badge {
+      color: var(--accent-light);
+    }
+
+    .quickpay-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .quickpay-form-header {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .quickpay-form-header .qp-selected-label {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .quickpay-form-header .qp-selected-summary {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 300;
+      color: var(--ink);
+      min-height: 32px;
+    }
+
+    .quickpay-form-header .qp-selected-detail {
+      font-size: 10px;
+      color: var(--accent);
+      min-height: 16px;
+    }
+
+    .qp-divider {
+      height: 1px;
+      background: var(--border);
+    }
+
+    .btn-pay {
+      background: var(--accent);
+      color: var(--white);
+      border: none;
+      padding: 18px 24px;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.15s;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-pay:hover {
+      background: var(--ink);
+    }
+
+    .btn-pay:disabled {
+      background: var(--border);
+      color: var(--muted);
+      cursor: not-allowed;
+    }
+
+    .btn-pay .ideal-mark {
+      font-size: 10px;
+      opacity: 0.8;
+      letter-spacing: 0.05em;
+    }
+
+    .qp-disclaimer {
+      font-size: 9px;
+      color: var(--muted);
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    .qp-error {
+      font-size: 10px;
+      color: var(--accent);
+      text-align: center;
+      min-height: 16px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .quickpay-inner { grid-template-columns: 1fr; gap: 40px; }
+      .quickpay-section { padding: 48px 32px; }
+      .quickpay-tiers { grid-template-columns: repeat(4, 1fr); }
+    }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 60px 32px; min-height: 40vh; }
+      .hero-right { padding: 48px 32px; }
+      .logo { font-size: 52px; }
+      .tier-options { grid-template-columns: repeat(4, 1fr); }
+      .tiers-grid, .tiers-grid-row2 { grid-template-columns: repeat(2, 1fr); }
+      .tiers-section, .how-section, .footer-cta, .footer-note { padding-left: 32px; padding-right: 32px; }
+      .section-divider { padding-left: 32px; padding-right: 32px; }
+      .how-section { grid-template-columns: 1fr; gap: 40px; }
+      .footer-cta { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="logo-area">
+      <span class="logo-eyebrow">Nijmegen — 2026</span>
+      <div class="logo">Bar<br/><em>THOKO</em></div>
+    </div>
+
+    <p class="hero-tagline">Een all-day bar waar Nijmegen thuiskomt. Burgers, wijn, saké — en jij mede-oprichter.</p>
+
+    <div class="progress-block">
+      <div class="progress-label">
+        <span>Via investeerders opgehaald: <span id="progress-amount">€0</span></span>
+        <span>Doel: €250.000</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="progress-label" style="justify-content:flex-start; gap:20px;">
+        <span><strong style="color:var(--cream)" id="investor-count">0</strong> investeerders</span>
+      </div>
+    </div>
+
+    <div class="hero-meta">
+      <span>Bar THOKO · Founding Round</span>
+      <span>Thomas & Koen · <strong>Nijmegen</strong></span>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <h2 class="cta-headline">Investeer in Bar THOKO</h2>
+    <p class="cta-sub">Kies je tier, vul je gegevens in en rond af. Je hoort zo snel mogelijk van ons.</p>
+
+    <div class="tier-selector">
+      <label>Kies je investering</label>
+      <div class="tier-options">
+        <button class="tier-btn" data-tier="proever" onclick="selectTier(this)">
+          <span class="tier-amount">€100</span>
+          <span class="tier-label">Proever</span>
+        </button>
+        <button class="tier-btn" data-tier="vriend" onclick="selectTier(this)">
+          <span class="tier-amount">€250</span>
+          <span class="tier-label">Vriend</span>
+        </button>
+        <button class="tier-btn" data-tier="supporter" onclick="selectTier(this)">
+          <span class="tier-amount">€500</span>
+          <span class="tier-label">Supporter</span>
+        </button>
+        <button class="tier-btn" data-tier="backer" onclick="selectTier(this)">
+          <span class="tier-amount">€750</span>
+          <span class="tier-label">Backer</span>
+        </button>
+        <button class="tier-btn" data-tier="founding" onclick="selectTier(this)">
+          <span class="tier-amount">€1.000</span>
+          <span class="tier-label">Founding</span>
+        </button>
+        <button class="tier-btn" data-tier="core" onclick="selectTier(this)">
+          <span class="tier-amount">€1.500</span>
+          <span class="tier-label">Core</span>
+        </button>
+        <button class="tier-btn" data-tier="partner" onclick="selectTier(this)">
+          <span class="tier-amount">€2.500</span>
+          <span class="tier-label">Partner</span>
+        </button>
+        <button class="tier-btn" data-tier="angel" onclick="selectTier(this)">
+          <span class="tier-amount">€5.000+</span>
+          <span class="tier-label">Angel</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="return-display" id="return-display">
+      <span class="return-type">Selecteer een tier</span>
+      <span class="return-main">—</span>
+      <span class="return-detail">Kies een bedrag hierboven om je rendement en voordelen te zien.</span>
+    </div>
+
+    <div class="invest-form">
+      <div class="form-row">
+        <input class="form-input" type="text" placeholder="Voornaam" />
+        <input class="form-input" type="text" placeholder="Achternaam" />
+      </div>
+      <input class="form-input" type="email" placeholder="E-mailadres" />
+      <button class="btn-invest" onclick="openModal()">Investeer nu →</button>
+      <p class="form-disclaimer">Na het invullen ontvang je een leningsovereenkomst of tegoedbon per mail. Betaling via iDEAL.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TIER OVERVIEW -->
+<div class="section-divider"><span>Alle tiers</span></div>
+
+<section class="tiers-section">
+  <div class="tiers-grid">
+    <!-- Row 1: Tegoedbon tiers + lening tiers -->
+    <div class="tier-card" onclick="scrollToForm('proever')">
+      <span class="tier-card-type">Tegoedbon</span>
+      <div>
+        <div class="tier-card-name">Proever</div>
+        <div class="tier-card-amount">€100</div>
+      </div>
+      <div class="tier-card-meta">
+        <strong>€120 consumptietegoed</strong>
+        Geen looptijd · Direct inzetbaar bij opening
+      </div>
+      <ul class="tier-card-rewards">
+        <li>Digitale tegoedbon op naam</li>
+        <li>Geen vervaldatum</li>
+      </ul>
+    </div>
+
+    <div class="tier-card" onclick="scrollToForm('vriend')">
+      <span class="tier-card-type">Tegoedbon</span>
+      <div>
+        <div class="tier-card-name">Vriend</div>
+        <div class="tier-card-amount">€250</div>
+      </div>
+      <div class="tier-card-meta">
+        <strong>€310 consumptietegoed</strong>
+        Geen looptijd · Direct inzetbaar bij opening
+      </div>
+      <ul class="tier-card-rewards">
+        <li>Digitale tegoedbon op naam</li>
+        <li>Geen vervaldatum</li>
+      </ul>
+    </div>
+
+    <div class="tier-card" onclick="scrollToForm('supporter')">
+      <span class="tier-card-type">Lening · 4% p/j</span>
+      <div>
+        <div class="tier-card-name">Supporter</div>
+        <div class="tier-card-amount">€500</div>
+      </div>
+      <div class="tier-card-meta">
+        <strong>€600 totaal over 5 jaar</strong>
+        Hoofdsom + rente gespreid terugbetaald per jaar
+      </div>
+      <ul class="tier-card-rewards">
+        <li>Uitnodiging openingsborrel</li>
+      </ul>
+    </div>
+
+    <div class="tier-card" onclick="scrollToForm('backer')">
+      <span class="tier-card-type">Lening · 4% p/j</span>
+      <div>
+        <div class="tier-card-name">Backer</div>
+        <div class="tier-card-amount">€750</div>
+      </div>
+      <div class="tier-card-meta">
+        <strong>€900 totaal over 5 jaar</strong>
+        Hoofdsom + rente gespreid terugbetaald per jaar
+      </div>
+      <ul class="tier-card-rewards">
+        <li>Uitnodiging openingsborrel</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tiers-grid-row2">
+    <div class="tier-card" onclick="scrollToForm('founding')">
+      <span class="tier-card-type">Lening · 4% p/j</span>
+      <div>
+        <div class="tier-card-name">Founding</div>
+        <div class="tier-card-amount">€1.000</div>
+      </div>
+      <div class="tier-card-meta">
+        <strong>€1.200 totaal over 5 jaar</strong>
+        Hoofdsom + rente gespreid terugbetaald per jaar
+      </div>
+      <ul class="tier-card-rewards">
+        <li>Openingsborrel</li>
+        <li>25% korting eerste bezoek</li>
+      </ul>
+    </div>
+
+    <div class="tier-card featured" onclick="scrollToForm('core')">
+      <span class="tier-featured-badge">★ Populair</span>
+      <span class="tier-card-type">Lening · 4% p/j</span>
+      <div>
+        <div class="tier-card-name">Core</div>
+        <div class="tier-card-amount">€1.500</div>
+      </div>
+      <div class="tier-card-meta">
+        <strong>€1.800 totaal over 5 jaar</strong>
+        Hoofdsom + rente gespreid terugbetaald per jaar
+      </div>
+      <ul class="tier-card-rewards">
+        <li>Openingsborrel</li>
+        <li>50% korting eerste bezoek</li>
+      </ul>
+    </div>
+
+    <div class="tier-card" onclick="scrollToForm('partner')">
+      <span class="tier-card-type">Lening · 4% p/j</span>
+      <div>
+        <div class="tier-card-name">Partner</div>
+        <div class="tier-card-amount">€2.500</div>
+      </div>
+      <div class="tier-card-meta">
+        <strong>€3.000 totaal over 5 jaar</strong>
+        Hoofdsom + rente gespreid terugbetaald per jaar
+      </div>
+      <ul class="tier-card-rewards">
+        <li>Alle Core-voordelen</li>
+        <li>Ambassadeurspas — 10% korting altijd</li>
+      </ul>
+    </div>
+
+    <div class="tier-card" onclick="scrollToForm('angel')">
+      <span class="tier-card-type">Lening · 4% p/j</span>
+      <div>
+        <div class="tier-card-name">Angel</div>
+        <div class="tier-card-amount">€5.000+</div>
+      </div>
+      <div class="tier-card-meta">
+        <strong>€6.000+ totaal over 5 jaar</strong>
+        Hoofdsom + rente gespreid terugbetaald per jaar
+      </div>
+      <ul class="tier-card-rewards">
+        <li>Alle Partner-voordelen</li>
+        <li>Persoonlijk contact Thomas & Koen</li>
+        <li>Jaarlijkse investor update</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<div class="section-divider"><span>Hoe het werkt</span></div>
+
+<section class="how-section" style="margin-top:40px;">
+  <h2 class="how-title">Zo simpel<br/>werkt het</h2>
+  <div class="how-steps">
+    <div class="how-step">
+      <span class="step-num">01</span>
+      <div class="step-content">
+        <h3>Kies je tier en vul in</h3>
+        <p>Selecteer het bedrag dat bij je past, vul je naam en e-mailadres in. Één scherm, geen account, geen omwegen.</p>
+      </div>
+    </div>
+    <div class="how-step">
+      <span class="step-num">02</span>
+      <div class="step-content">
+        <h3>Betaal via iDEAL</h3>
+        <p>Directe betaling via iDEAL. Je hoort zo snel mogelijk van ons met je document en bevestiging.</p>
+      </div>
+    </div>
+    <div class="how-step">
+      <span class="step-num">03</span>
+      <div class="step-content">
+        <h3>Teken de overeenkomst</h3>
+        <p>Lening-tiers ontvangen een leningsovereenkomst ter digitale ondertekening. Tegoedbon-tiers ontvangen direct hun bon.</p>
+      </div>
+    </div>
+    <div class="how-step">
+      <span class="step-num">04</span>
+      <div class="step-content">
+        <h3>Gespreid terugbetaald over 5 jaar</h3>
+        <p>Elk jaar ontvang je een deel van je hoofdsom terug, plus de rente over het uitstaande bedrag. Na jaar 5 is alles terugbetaald. Geen verrassingen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="footer-note">
+  <span>© Bar THOKO — Nijmegen</span>
+  <span>Thomas & Koen · Founding Round 2026</span>
+  <span>Vragen? <a href="mailto:koen@barthoko.nl">koen@barthoko.nl</a></span>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2>Bevestig je investering</h2>
+    <div class="modal-tier-info" id="modal-tier-info">Selecteer een tier om te bevestigen</div>
+    <div class="modal-return-box" id="modal-return-box">
+      <strong id="modal-return-amount">—</strong>
+      <span id="modal-return-detail">—</span>
+    </div>
+    <div class="modal-form">
+      <input class="form-input" type="text" placeholder="Voornaam" />
+      <input class="form-input" type="text" placeholder="Achternaam" />
+      <input class="form-input" type="email" placeholder="E-mailadres" />
+      <input class="form-input" type="tel" placeholder="Telefoonnummer (optioneel)" />
+      <button class="btn-invest" onclick="submitInvestment()">Betalingspagina →</button>
+      <p class="modal-disclaimer">Je wordt doorgestuurd naar iDEAL. Na betaling hoor je zo snel mogelijk van ons. Door te betalen ga je akkoord met de algemene voorwaarden van Bar THOKO.</p>
+    </div>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  const tiers = {
+    proever:   { label: 'Proever',   amount: '€100',   type: 'Tegoedbon', returnText: '€120 consumptietegoed', detail: 'Direct inzetbaar bij opening · Geen vervaldatum', rewards: [] },
+    vriend:    { label: 'Vriend',    amount: '€250',   type: 'Tegoedbon', returnText: '€310 consumptietegoed', detail: 'Direct inzetbaar bij opening · Geen vervaldatum', rewards: [] },
+    supporter: { label: 'Supporter', amount: '€500',   type: 'Lening · 4% p/j', returnText: '€600 over 5 jaar', detail: 'Hoofdsom + rente gespreid terugbetaald per jaar', rewards: ['Uitnodiging openingsborrel'] },
+    backer:    { label: 'Backer',    amount: '€750',   type: 'Lening · 4% p/j', returnText: '€900 over 5 jaar', detail: 'Hoofdsom + rente gespreid terugbetaald per jaar', rewards: ['Uitnodiging openingsborrel'] },
+    founding:  { label: 'Founding',  amount: '€1.000', type: 'Lening · 4% p/j', returnText: '€1.200 over 5 jaar', detail: 'Hoofdsom + rente gespreid terugbetaald per jaar', rewards: ['Openingsborrel', '25% korting eerste bezoek'] },
+    core:      { label: 'Core',      amount: '€1.500', type: 'Lening · 4% p/j', returnText: '€1.800 over 5 jaar', detail: 'Hoofdsom + rente gespreid terugbetaald per jaar', rewards: ['Openingsborrel', '50% korting eerste bezoek'] },
+    partner:   { label: 'Partner',   amount: '€2.500', type: 'Lening · 4% p/j', returnText: '€3.000 over 5 jaar', detail: 'Hoofdsom + rente gespreid terugbetaald per jaar', rewards: ['Alle Core-voordelen', 'Ambassadeurspas — 10% korting altijd'] },
+    angel:     { label: 'Angel',     amount: '€5.000+', type: 'Lening · 4% p/j', returnText: '€6.000+ over 5 jaar', detail: 'Hoofdsom + rente gespreid terugbetaald per jaar', rewards: ['Alle Partner-voordelen', 'Persoonlijk contact Thomas & Koen', 'Jaarlijkse investor update'] }
+  };
+
+  const tierAmounts = { proever: 100, vriend: 250, supporter: 500, backer: 750, founding: 1000, core: 1500, partner: 2500, angel: 5000 };
+
+  let selectedTier = null;
+
+  function selectTier(btn) {
+    document.querySelectorAll('.hero-right .tier-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedTier = btn.dataset.tier;
+    updateReturnDisplay();
+  }
+
+
+  function updateReturnDisplay() {
+    if (!selectedTier) return;
+    const t = tiers[selectedTier];
+    const display = document.getElementById('return-display');
+    const rewardsHtml = t.rewards.map(r => `<div class="reward-item">${r}</div>`).join('');
+    display.innerHTML = `
+      <span class="return-type">${t.type}</span>
+      <span class="return-main">${t.returnText}</span>
+      <span class="return-detail">${t.detail}</span>
+      ${rewardsHtml ? `<div class="return-rewards">${rewardsHtml}</div>` : ''}
+    `;
+  }
+
+  function scrollToForm(tier) {
+    selectedTier = tier;
+    document.querySelectorAll('.hero-right .tier-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.tier === tier);
+    });
+    updateReturnDisplay();
+    document.querySelector('.hero-right').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function openModal() {
+    const t = selectedTier ? tiers[selectedTier] : null;
+    if (t) {
+      document.getElementById('modal-tier-info').textContent = `${t.label} — ${t.amount} — ${t.type}`;
+      document.getElementById('modal-return-amount').textContent = t.returnText;
+      document.getElementById('modal-return-detail').textContent = t.detail;
+    } else {
+      document.getElementById('modal-tier-info').textContent = 'Geen tier geselecteerd — selecteer eerst een bedrag';
+      document.getElementById('modal-return-amount').textContent = '—';
+      document.getElementById('modal-return-detail').textContent = '';
+    }
+    document.getElementById('modal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+  }
+
+  // ── QUICK PAY LOGIC ──────────────────────────────────────────
+  const qpTierData = {
+    proever:   { label: 'Proever',   amount: 100,  summary: '€100 → €120 consumptietegoed',   detail: 'Tegoedbon · geen looptijd · inzetbaar bij opening' },
+    vriend:    { label: 'Vriend',    amount: 250,  summary: '€250 → €310 consumptietegoed',   detail: 'Tegoedbon · geen looptijd · inzetbaar bij opening' },
+    supporter: { label: 'Supporter', amount: 500,  summary: '€500 → €600 over 5 jaar',        detail: 'Lening · 4% p/j · openingsborrel' },
+    backer:    { label: 'Backer',    amount: 750,  summary: '€750 → €900 over 5 jaar',        detail: 'Lening · 4% p/j · openingsborrel' },
+    founding:  { label: 'Founding',  amount: 1000, summary: '€1.000 → €1.200 over 5 jaar',   detail: 'Lening · 4% p/j · openingsborrel + 25% korting eerste bezoek' },
+    core:      { label: 'Core',      amount: 1500, summary: '€1.500 → €1.800 over 5 jaar',   detail: 'Lening · 4% p/j · openingsborrel + 50% korting eerste bezoek' },
+    partner:   { label: 'Partner',   amount: 2500, summary: '€2.500 → €3.000 over 5 jaar',   detail: 'Lening · 4% p/j · alle Core-voordelen + ambassadeurspas 10%' },
+    angel:     { label: 'Angel',     amount: 5000, summary: '€5.000+ → €6.000+ over 5 jaar', detail: 'Lening · 4% p/j · alle Partner-voordelen + persoonlijk contact' }
+  };
+
+  let qpSelectedTier = null;
+
+  function selectQPTier(el) {
+    document.querySelectorAll('.qp-tier').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    qpSelectedTier = el.dataset.tier;
+    const d = qpTierData[qpSelectedTier];
+    document.getElementById('qp-summary').textContent = d.summary;
+    document.getElementById('qp-detail').textContent = d.detail;
+    document.getElementById('qp-pay-btn').disabled = false;
+    document.getElementById('qp-error').textContent = '';
+  }
+
+  async function initiateQPPayment() {
+    const firstname = document.getElementById('qp-firstname').value.trim();
+    const lastname  = document.getElementById('qp-lastname').value.trim();
+    const email     = document.getElementById('qp-email').value.trim();
+    const errEl     = document.getElementById('qp-error');
+
+    if (!qpSelectedTier)        { errEl.textContent = 'Selecteer eerst een tier.'; return; }
+    if (!firstname || !lastname) { errEl.textContent = 'Vul je volledige naam in.'; return; }
+    if (!email || !email.includes('@')) { errEl.textContent = 'Vul een geldig e-mailadres in.'; return; }
+
+    errEl.textContent = '';
+    const btn = document.getElementById('qp-pay-btn');
+    btn.disabled = true;
+    btn.textContent = 'Bezig met laden…';
+
+    try {
+      const res = await fetch('/api/create-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          tier: qpSelectedTier,
+          amount: qpTierData[qpSelectedTier].amount,
+          firstname,
+          lastname,
+          email
+        })
+      });
+      const data = await res.json();
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
+      } else {
+        throw new Error(data.error || 'Onbekende fout');
+      }
+    } catch (err) {
+      errEl.textContent = 'Betaling kon niet worden gestart. Probeer het opnieuw.';
+      btn.disabled = false;
+      btn.innerHTML = 'Betaal via iDEAL <span class="ideal-mark">/ iDEAL</span>';
+    }
+  }
+
+  // ── MODAL submitInvestment — zelfde backend endpoint ──────────
+  function submitInvestment() {
+    const modal = document.getElementById('modal');
+    const inputs = modal.querySelectorAll('.form-input');
+    const firstname = inputs[0].value.trim();
+    const lastname  = inputs[1].value.trim();
+    const email     = inputs[2].value.trim();
+    if (!selectedTier || !firstname || !lastname || !email) {
+      alert('Vul alle velden in en selecteer een tier.');
+      return;
+    }
+    fetch('/api/create-payment', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tier: selectedTier, amount: tierAmounts[selectedTier], firstname, lastname, email })
+    })
+    .then(r => r.json())
+    .then(data => { if (data.checkoutUrl) window.location.href = data.checkoutUrl; else alert('Fout: ' + (data.error || '')); })
+    .catch(() => alert('Betaling kon niet worden gestart. Probeer het opnieuw.'));
+  }
+
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('investor-count').textContent = '2';
+    }, 800);
+  });
+
+  async function fetchProgress() {
+    try {
+      const res = await fetch('/api/invest');
+      if (!res.ok) {
+        updateProgressUI(100000, 2);
+        return;
+      }
+      const data = await res.json();
+      updateProgressUI(data.total || 100000, data.count || 2);
+    } catch(e) {
+      updateProgressUI(100000, 2);
+    }
+  }
+
+  function updateProgressUI(total, count) {
+    const goal = 250000;
+    const pct = Math.min((total / goal) * 100, 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-amount').textContent = '\u20ac' + total.toLocaleString('nl-NL');
+    document.getElementById('investor-count').textContent = count;
+  }
+
+  fetchProgress();
+  setInterval(fetchProgress, 30000);
+
+  document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+</script>
+</body>
+</html>
