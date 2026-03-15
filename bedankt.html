@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bedankt — Bar THOKO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'DM Mono', monospace;
+      background: #1a1712;
+      color: #faf8f4;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+    .card {
+      max-width: 560px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #c4502a;
+    }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 52px;
+      font-weight: 300;
+      line-height: 1.1;
+      color: #faf8f4;
+    }
+    p {
+      font-size: 13px;
+      line-height: 1.9;
+      color: #ede7d9;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+    a {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #c4502a;
+      text-decoration: none;
+      border-bottom: 1px solid #c4502a;
+      padding-bottom: 2px;
+    }
+    a:hover { color: #e8957a; border-color: #e8957a; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <span class="eyebrow">Bar THOKO — Nijmegen</span>
+    <h1 id="titel">Bedankt.</h1>
+    <p>Je investering is ontvangen. Je ontvangt binnen 24 uur een bevestiging en je document per mail. We zien je bij de opening.</p>
+    <a href="https://barthoko-invest.netlify.app">Terug naar de investeerpagina</a>
+  </div>
+  <script>
+    const naam = new URLSearchParams(window.location.search).get('naam');
+    if (naam) document.getElementById('titel').textContent = 'Bedankt, ' + naam + '.';
+  </script>
+</body>
+</html>
