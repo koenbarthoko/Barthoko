@@ -21,10 +21,10 @@ exports.handler = async (event) => {
     return { statusCode: 200, body: 'not paid' };
   }
 
-  const { tier, amount, email } = payment.metadata;
+  const { tier, amount, firstname, lastname, email, visible } = payment.metadata;
 
   const store = getStore('investments');
-  const existing = await store.get('progress', { type: 'json' }) || { total: 0, count: 0 };
+  const existing = await store.get('progress', { type: 'json' }) || { total: 100000, count: 2 };
 
   await store.set('progress', JSON.stringify({
     total: existing.total + Number(amount),
@@ -32,7 +32,9 @@ exports.handler = async (event) => {
   }));
 
   await store.set(`investor-${Date.now()}`, JSON.stringify({
-    tier, amount, email, paidAt: new Date().toISOString()
+    tier, amount, firstname, lastname, email,
+    visible: visible !== false,
+    paidAt: new Date().toISOString()
   }));
 
   return { statusCode: 200, body: 'ok' };
