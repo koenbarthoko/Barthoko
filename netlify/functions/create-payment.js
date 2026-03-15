@@ -12,7 +12,7 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: JSON.stringify({ error: 'Invalid JSON' }) };
   }
 
-  const { tier, amount, firstname, lastname, email } = body;
+  const { tier, amount, firstname, lastname, email, visible } = body;
 
   if (!tier || !amount || !firstname || !email) {
     return { statusCode: 400, body: JSON.stringify({ error: 'Missing required fields' }) };
@@ -43,7 +43,7 @@ exports.handler = async (event) => {
       redirectUrl: `https://barthoko-invest.netlify.app/bedankt?tier=${tier}&naam=${encodeURIComponent(firstname)}`,
       webhookUrl: 'https://barthoko-invest.netlify.app/.netlify/functions/payment-webhook',
       method: 'ideal',
-      metadata: { tier, amount, firstname, lastname, email }
+      metadata: { tier, amount, firstname, lastname, email, visible: visible !== false }
     });
 
     return {
