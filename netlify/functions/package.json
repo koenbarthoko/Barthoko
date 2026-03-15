@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@mollie/api-client": "^3.7.0"
+  }
+}
