@@ -238,6 +238,27 @@
       opacity: 0.7;
     }
 
+    /* ANGEL CUSTOM INPUT */
+    .angel-custom-wrap {
+      display: none;
+      margin-top: 8px;
+    }
+
+    .angel-custom-wrap.visible {
+      display: block;
+    }
+
+    .angel-custom-wrap .form-input {
+      width: 100%;
+    }
+
+    .angel-custom-hint {
+      font-size: 9px;
+      color: var(--muted);
+      margin-top: 4px;
+      letter-spacing: 0.05em;
+    }
+
     /* DYNAMIC RETURN DISPLAY */
     .return-display {
       background: var(--cream);
@@ -686,6 +707,21 @@
       gap: 10px;
     }
 
+    /* MODAL ANGEL INPUT */
+    .modal-angel-wrap {
+      display: none;
+    }
+
+    .modal-angel-wrap.visible {
+      display: block;
+    }
+
+    .modal-angel-hint {
+      font-size: 9px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
     .modal-disclaimer {
       font-size: 9px;
       color: var(--muted);
@@ -1043,7 +1079,6 @@
       .quickpay-inner { grid-template-columns: 1fr; gap: 40px; }
       .quickpay-section { padding: 48px 32px; }
       .quickpay-tiers { grid-template-columns: repeat(4, 1fr); }
-    }
       .hero { grid-template-columns: 1fr; min-height: auto; }
       .hero-left { padding: 60px 32px; min-height: 40vh; }
       .hero-right { padding: 48px 32px; }
@@ -1136,6 +1171,20 @@
           <span class="tier-label">Angel</span>
         </button>
       </div>
+
+      <!-- ANGEL CUSTOM BEDRAG -->
+      <div class="angel-custom-wrap" id="angel-custom-wrap">
+        <input
+          class="form-input"
+          id="angel-amount-input"
+          type="number"
+          min="5000"
+          step="100"
+          placeholder="Vul je bedrag in (min. €5.000)"
+          oninput="updateAngelReturn(this.value)"
+        />
+        <p class="angel-custom-hint">Bedrag wordt verwerkt als onderhandse lening · 4% p/j · 5 jaar looptijd</p>
+      </div>
     </div>
 
     <div class="return-display" id="return-display">
@@ -1161,7 +1210,6 @@
 
 <section class="tiers-section">
   <div class="tiers-grid">
-    <!-- Row 1: Tegoedbon tiers + lening tiers -->
     <div class="tier-card" onclick="scrollToForm('proever')">
       <span class="tier-card-type">Tegoedbon</span>
       <div>
@@ -1331,7 +1379,6 @@
   </div>
 </section>
 
-
 <!-- INVESTORS -->
 <div class="section-divider"><span>Onze investeerders</span></div>
 
@@ -1344,7 +1391,6 @@
     <div class="investor-placeholder">Nog geen publieke investeerders — wees de eerste.</div>
   </div>
 </section>
-
 
 <div class="footer-note">
   <span>© Bar THOKO — Nijmegen</span>
@@ -1363,6 +1409,19 @@
       <span id="modal-return-detail">—</span>
     </div>
     <div class="modal-form">
+      <!-- ANGEL CUSTOM BEDRAG IN MODAL -->
+      <div class="modal-angel-wrap" id="modal-angel-wrap">
+        <input
+          class="form-input"
+          id="modal-angel-amount"
+          type="number"
+          min="5000"
+          step="100"
+          placeholder="Bedrag (min. €5.000)"
+          oninput="updateModalAngelReturn(this.value)"
+        />
+        <p class="modal-angel-hint">Onderhandse lening · 4% p/j · 5 jaar looptijd</p>
+      </div>
       <input class="form-input" id="modal-firstname" type="text" placeholder="Voornaam" />
       <input class="form-input" id="modal-lastname" type="text" placeholder="Achternaam" />
       <input class="form-input" id="modal-email" type="email" placeholder="E-mailadres" />
@@ -1397,9 +1456,27 @@
     document.querySelectorAll('.hero-right .tier-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     selectedTier = btn.dataset.tier;
-    updateReturnDisplay();
-  }
 
+    // Toon/verberg angel custom input
+    const angelWrap = document.getElementById('angel-custom-wrap');
+    if (selectedTier === 'angel') {
+      angelWrap.classList.add('visible');
+      // Reset return display naar placeholder totdat bedrag ingevuld is
+      const input = document.getElementById('angel-amount-input');
+      if (input.value && parseInt(input.value) >= 5000) {
+        updateAngelReturn(input.value);
+      } else {
+        document.getElementById('return-display').innerHTML = `
+          <span class="return-type">Lening · 4% p/j</span>
+          <span class="return-main">Angel — vul bedrag in</span>
+          <span class="return-detail">Minimaal €5.000 · hoofdsom + rente gespreid over 5 jaar</span>
+        `;
+      }
+    } else {
+      angelWrap.classList.remove('visible');
+      updateReturnDisplay();
+    }
+  }
 
   function updateReturnDisplay() {
     if (!selectedTier) return;
@@ -1414,31 +1491,142 @@
     `;
   }
 
+  function updateAngelReturn(val) {
+    const n = parseInt(val);
+    if (!n || n < 5000) {
+      document.getElementById('return-display').innerHTML = `
+        <span class="return-type">Lening · 4% p/j</span>
+        <span class="return-main">Angel — vul bedrag in</span>
+        <span class="return-detail">Minimaal €5.000 · hoofdsom + rente gespreid over 5 jaar</span>
+      `;
+      return;
+    }
+    // Bereken totaal terugbetaald: hoofdsom + 4% per jaar over 5 jaar (aflopend)
+    // Jaar 1: n + n*0.04, Jaar 2: n*0.8 + n*0.8*0.04, etc. — simpele benadering: n * 1.12
+    const total = Math.round(n * 1.12).toLocaleString('nl-NL');
+    const formatted = n.toLocaleString('nl-NL');
+    document.getElementById('return-display').innerHTML = `
+      <span class="return-type">Lening · 4% p/j</span>
+      <span class="return-main">€${formatted} → ~€${total} over 5 jaar</span>
+      <span class="return-detail">Hoofdsom + rente gespreid terugbetaald per jaar</span>
+      <div class="return-rewards">
+        <div class="reward-item">Alle Partner-voordelen</div>
+        <div class="reward-item">Persoonlijk contact Thomas & Koen</div>
+        <div class="reward-item">Jaarlijkse investor update</div>
+      </div>
+    `;
+  }
+
+  function updateModalAngelReturn(val) {
+    const n = parseInt(val);
+    if (!n || n < 5000) {
+      document.getElementById('modal-return-amount').textContent = 'Vul een bedrag in (min. €5.000)';
+      document.getElementById('modal-return-detail').textContent = '';
+      return;
+    }
+    const total = Math.round(n * 1.12).toLocaleString('nl-NL');
+    const formatted = n.toLocaleString('nl-NL');
+    document.getElementById('modal-return-amount').textContent = `€${formatted} → ~€${total} over 5 jaar`;
+    document.getElementById('modal-return-detail').textContent = 'Hoofdsom + rente gespreid terugbetaald per jaar';
+  }
+
   function scrollToForm(tier) {
     selectedTier = tier;
     document.querySelectorAll('.hero-right .tier-btn').forEach(b => {
       b.classList.toggle('active', b.dataset.tier === tier);
     });
-    updateReturnDisplay();
+    const angelWrap = document.getElementById('angel-custom-wrap');
+    if (tier === 'angel') {
+      angelWrap.classList.add('visible');
+      const input = document.getElementById('angel-amount-input');
+      if (input.value && parseInt(input.value) >= 5000) {
+        updateAngelReturn(input.value);
+      } else {
+        document.getElementById('return-display').innerHTML = `
+          <span class="return-type">Lening · 4% p/j</span>
+          <span class="return-main">Angel — vul bedrag in</span>
+          <span class="return-detail">Minimaal €5.000 · hoofdsom + rente gespreid over 5 jaar</span>
+        `;
+      }
+    } else {
+      angelWrap.classList.remove('visible');
+      updateReturnDisplay();
+    }
     document.querySelector('.hero-right').scrollIntoView({ behavior: 'smooth' });
   }
 
   function openModal() {
     const t = selectedTier ? tiers[selectedTier] : null;
+    const modalAngelWrap = document.getElementById('modal-angel-wrap');
+
     if (t) {
       document.getElementById('modal-tier-info').textContent = `${t.label} — ${t.amount} — ${t.type}`;
-      document.getElementById('modal-return-amount').textContent = t.returnText;
-      document.getElementById('modal-return-detail').textContent = t.detail;
+
+      if (selectedTier === 'angel') {
+        modalAngelWrap.classList.add('visible');
+        // Kopieer bedrag van hero input naar modal als al ingevuld
+        const heroVal = document.getElementById('angel-amount-input').value;
+        if (heroVal) {
+          document.getElementById('modal-angel-amount').value = heroVal;
+          updateModalAngelReturn(heroVal);
+        } else {
+          document.getElementById('modal-return-amount').textContent = 'Vul een bedrag in (min. €5.000)';
+          document.getElementById('modal-return-detail').textContent = '';
+        }
+      } else {
+        modalAngelWrap.classList.remove('visible');
+        document.getElementById('modal-return-amount').textContent = t.returnText;
+        document.getElementById('modal-return-detail').textContent = t.detail;
+      }
     } else {
+      modalAngelWrap.classList.remove('visible');
       document.getElementById('modal-tier-info').textContent = 'Geen tier geselecteerd — selecteer eerst een bedrag';
       document.getElementById('modal-return-amount').textContent = '—';
       document.getElementById('modal-return-detail').textContent = '';
     }
+
     document.getElementById('modal').classList.add('open');
   }
 
   function closeModal() {
     document.getElementById('modal').classList.remove('open');
+  }
+
+  // ── MODAL submitInvestment ────────────────────────────────────
+  function submitInvestment() {
+    const firstname = document.getElementById('modal-firstname').value.trim();
+    const lastname  = document.getElementById('modal-lastname').value.trim();
+    const email     = document.getElementById('modal-email').value.trim();
+    const visible   = document.getElementById('modal-visible').checked;
+
+    if (!selectedTier || !firstname || !lastname || !email) {
+      alert('Vul alle velden in en selecteer een tier.');
+      return;
+    }
+
+    let amount;
+    if (selectedTier === 'angel') {
+      const customVal = parseInt(document.getElementById('modal-angel-amount').value);
+      if (!customVal || customVal < 5000) {
+        alert('Vul een geldig bedrag in van minimaal €5.000.');
+        return;
+      }
+      amount = customVal;
+    } else {
+      amount = tierAmounts[selectedTier];
+    }
+
+    fetch('/.netlify/functions/create-payment', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tier: selectedTier, amount, firstname, lastname, email, visible })
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.checkoutUrl) window.location.href = data.checkoutUrl;
+      else alert('Fout: ' + (data.error || ''));
+    })
+    .catch(() => alert('Betaling kon niet worden gestart. Probeer het opnieuw.'));
   }
 
   // ── QUICK PAY LOGIC ──────────────────────────────────────────
@@ -1472,7 +1660,7 @@
     const email     = document.getElementById('qp-email').value.trim();
     const errEl     = document.getElementById('qp-error');
 
-    if (!qpSelectedTier)        { errEl.textContent = 'Selecteer eerst een tier.'; return; }
+    if (!qpSelectedTier)         { errEl.textContent = 'Selecteer eerst een tier.'; return; }
     if (!firstname || !lastname) { errEl.textContent = 'Vul je volledige naam in.'; return; }
     if (!email || !email.includes('@')) { errEl.textContent = 'Vul een geldig e-mailadres in.'; return; }
 
@@ -1504,26 +1692,6 @@
       btn.disabled = false;
       btn.innerHTML = 'Betaal via iDEAL <span class="ideal-mark">/ iDEAL</span>';
     }
-  }
-
-  // ── MODAL submitInvestment — zelfde backend endpoint ──────────
-  function submitInvestment() {
-    const firstname = document.getElementById('modal-firstname').value.trim();
-    const lastname  = document.getElementById('modal-lastname').value.trim();
-    const email     = document.getElementById('modal-email').value.trim();
-    const visible   = document.getElementById('modal-visible').checked;
-    if (!selectedTier || !firstname || !lastname || !email) {
-      alert('Vul alle velden in en selecteer een tier.');
-      return;
-    }
-    fetch('/.netlify/functions/create-payment', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ tier: selectedTier, amount: tierAmounts[selectedTier], firstname, lastname, email, visible })
-    })
-    .then(r => r.json())
-    .then(data => { if (data.checkoutUrl) window.location.href = data.checkoutUrl; else alert('Fout: ' + (data.error || '')); })
-    .catch(() => alert('Betaling kon niet worden gestart. Probeer het opnieuw.'));
   }
 
   // ── INVESTORS LIST ────────────────────────────────────────────
@@ -1559,12 +1727,6 @@
 
   fetchInvestors();
   setInterval(fetchInvestors, 30000);
-
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      document.getElementById('investor-count').textContent = '2';
-    }, 800);
-  });
 
   async function fetchProgress() {
     try {
