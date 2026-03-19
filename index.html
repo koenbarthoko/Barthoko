@@ -1092,8 +1092,104 @@
       .form-row { grid-template-columns: 1fr; }
     }
   </style>
+  <style>
+    #access-gate {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #1a1712;
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    #access-gate.visible { display: flex; }
+    #access-gate-inner {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 400px;
+      padding: 40px;
+    }
+    .gate-eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #c4502a;
+      font-family: 'DM Mono', monospace;
+    }
+    .gate-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 300;
+      color: #faf8f4;
+      line-height: 1.0;
+    }
+    .gate-title em { font-style: italic; color: #e8957a; }
+    .gate-sub {
+      font-size: 11px;
+      color: #7a7468;
+      line-height: 1.8;
+      font-family: 'DM Mono', monospace;
+    }
+    .gate-error {
+      font-size: 10px;
+      color: #c4502a;
+      min-height: 14px;
+      font-family: 'DM Mono', monospace;
+    }
+    #page-content { display: none; }
+    #page-content.visible { display: block; }
+  </style>
 </head>
 <body>
+<!-- ACCESS GATE -->
+<div id="access-gate">
+  <div id="access-gate-inner">
+    <span class="gate-eyebrow">Bar THOKO — Nijmegen</span>
+    <div class="gate-title">Besloten<br/><em>ronde</em></div>
+    <p class="gate-sub">Vul de toegangscode in die je hebt ontvangen.</p>
+    <input
+      id="gate-input"
+      type="text"
+      placeholder="Toegangscode"
+      autocomplete="off"
+      style="
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.15);
+        border-bottom-color: #c4502a;
+        color: #faf8f4;
+        font-family: 'DM Mono', monospace;
+        font-size: 13px;
+        letter-spacing: 0.15em;
+        padding: 14px 16px;
+        outline: none;
+        width: 100%;
+        text-align: center;
+        text-transform: uppercase;
+      "
+      onkeydown="if(event.key==='Enter') checkCode()"
+    />
+    <button
+      onclick="checkCode()"
+      style="
+        background: #c4502a;
+        color: #faf8f4;
+        border: none;
+        padding: 14px 24px;
+        font-family: 'DM Mono', monospace;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        cursor: pointer;
+        width: 100%;
+      "
+    >Toegang →</button>
+    <p class="gate-error" id="gate-error"></p>
+  </div>
+</div>
+
+<div id="page-content">
 
 <!-- HERO -->
 <section class="hero">
@@ -1395,7 +1491,7 @@
 <div class="footer-note">
   <span>© Bar THOKO — Nijmegen</span>
   <span>Thomas & Koen · Founding Round 2026</span>
-  <span>Vragen? <a href="mailto:koen@barthoko.nl">koen@barthoko.nl</a></span>
+  <span>Vragen? <a href="/cdn-cgi/l/email-protection#553e3a303b15373427213d3a3e3a7b3b39"><span class="__cf_email__" data-cfemail="9df6f2f8f3ddfffcefe9f5f2f6f2b3f3f1">[email&#160;protected]</span></a></span>
 </div>
 
 <!-- MODAL -->
@@ -1436,7 +1532,7 @@
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   const tiers = {
     proever:   { label: 'Proever',   amount: '€100',   type: 'Tegoedbon', returnText: '€120 consumptietegoed', detail: 'Direct inzetbaar bij opening · Geen vervaldatum', rewards: [] },
     vriend:    { label: 'Vriend',    amount: '€250',   type: 'Tegoedbon', returnText: '€310 consumptietegoed', detail: 'Direct inzetbaar bij opening · Geen vervaldatum', rewards: [] },
@@ -1747,7 +1843,7 @@
     const pct = Math.min((total / goal) * 100, 100);
     document.getElementById('progress-fill').style.width = pct + '%';
     document.getElementById('progress-amount').textContent = '\u20ac' + total.toLocaleString('nl-NL');
-    document.getElementById('investor-count').textContent = count;
+        document.getElementById('investor-count').textContent = count;
   }
 
   fetchProgress();
@@ -1757,5 +1853,66 @@
     if (e.target === this) closeModal();
   });
 </script>
+</div><!-- /page-content -->
+
+<script>
+(function() {
+  function showGate(msg) {
+    var el = document.getElementById('access-gate');
+    if (el) el.classList.add('visible');
+    if (msg) {
+      var err = document.getElementById('gate-error');
+      if (err) err.textContent = msg;
+    }
+  }
+  function showPage() {
+    var gate = document.getElementById('access-gate');
+    var page = document.getElementById('page-content');
+    if (gate) gate.classList.remove('visible');
+    if (page) page.classList.add('visible');
+  }
+
+  // Check session storage — blijf ingelogd zolang tabblad open is
+  if (sessionStorage.getItem('thoko_access') === '1') {
+    showPage();
+    return;
+  }
+
+  showGate();
+
+  window.checkCode = function() {
+    var input = document.getElementById('gate-input');
+    var code = input ? input.value.trim().toUpperCase() : '';
+    var errEl = document.getElementById('gate-error');
+
+    if (!code) { errEl.textContent = 'Vul een toegangscode in.'; return; }
+
+    errEl.textContent = '';
+    input.disabled = true;
+
+    fetch('/.netlify/functions/validate-token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: code })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.valid) {
+        sessionStorage.setItem('thoko_access', '1');
+        showPage();
+      } else {
+        errEl.textContent = 'Onjuiste toegangscode.';
+        input.disabled = false;
+        input.focus();
+      }
+    })
+    .catch(function() {
+      errEl.textContent = 'Kon niet verbinden. Probeer opnieuw.';
+      input.disabled = false;
+    });
+  };
+})();
+</script>
+
 </body>
 </html>
