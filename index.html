@@ -1721,6 +1721,20 @@
     document.getElementById('iban-bedrag').textContent = '€' + amount.toLocaleString('nl-NL');
     document.getElementById('iban-omschrijving').textContent = 'Bar THOKO – ' + t.label + ' – ' + firstname + ' ' + lastname;
     document.getElementById('iban-modal').classList.add('open');
+
+    // Stuur gegevens naar Formspree
+    fetch('https://formspree.io/f/mreyjjvv', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        naam: firstname + ' ' + lastname,
+        email: email,
+        tier: t.label,
+        type: t.type,
+        bedrag: '€' + amount.toLocaleString('nl-NL'),
+        omschrijving: 'Bar THOKO – ' + t.label + ' – ' + firstname + ' ' + lastname
+      })
+    }).catch(function() {});
   }
 
   // ── QUICK PAY LOGIC ──────────────────────────────────────────
