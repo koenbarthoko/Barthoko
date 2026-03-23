@@ -1217,7 +1217,18 @@
     <div class="hero-investors" id="hero-investors-block">
       <div class="hero-investors-label">Zij doen al mee</div>
       <div id="hero-investors-list">
-        <div class="hero-investor-placeholder">Nog geen publieke investeerders</div>
+        <div class="hero-investor-row">
+          <span class="hero-investor-name">Joost Landman</span>
+          <span class="hero-investor-tier">Supporter</span>
+        </div>
+        <div class="hero-investor-row">
+          <span class="hero-investor-name">Brammus Tonen</span>
+          <span class="hero-investor-tier">Proever</span>
+        </div>
+        <div class="hero-investor-row">
+          <span class="hero-investor-name">Johan Karsemeijer</span>
+          <span class="hero-investor-tier">Angel</span>
+        </div>
       </div>
     </div>
 
@@ -1296,7 +1307,7 @@
       </div>
       <input class="form-input" type="email" placeholder="E-mailadres" />
       <button class="btn-invest" onclick="openModal()">Investeer nu →</button>
-      <p class="form-disclaimer">Na bevestiging ontvang je betaalinstructies per mail. Betaling via bankoverschrijving.</p>
+      <p class="form-disclaimer">Na het invullen ontvang je een leningsovereenkomst of tegoedbon per mail. Betaling via iDEAL.</p>
     </div>
   </div>
 </section>
@@ -1484,7 +1495,18 @@
     <p class="investors-sub">Elke investeerder maakt Bar THOKO mogelijk. Jij ook?</p>
   </div>
   <div class="investors-list" id="investors-list">
-    <div class="investor-placeholder">Nog geen publieke investeerders — wees de eerste.</div>
+    <div class="investor-row">
+      <span class="investor-name">Joost Landman</span>
+      <span class="investor-tier">Supporter</span>
+    </div>
+    <div class="investor-row">
+      <span class="investor-name">Brammus Tonen</span>
+      <span class="investor-tier">Proever</span>
+    </div>
+    <div class="investor-row">
+      <span class="investor-name">Johan Karsemeijer</span>
+      <span class="investor-tier">Angel</span>
+    </div>
   </div>
 </section>
 
@@ -1526,8 +1548,8 @@
         <input type="checkbox" id="modal-visible" checked />
         <span>Toon mij op de investeerderspagina</span>
       </label>
-      <button class="btn-invest" onclick="submitInvestment()">Bevestig investering →</button>
-      <p class="modal-disclaimer">Na bevestiging ontvang je de betaalinstructies. Je maakt het bedrag zelf over via een bankoverschrijving.</p>
+      <button class="btn-invest" onclick="submitInvestment()">Betalingspagina →</button>
+      <p class="modal-disclaimer">Je wordt doorgestuurd naar iDEAL. Na betaling hoor je zo snel mogelijk van ons. Door te betalen ga je akkoord met de algemene voorwaarden van Bar THOKO.</p>
     </div>
   </div>
 </div>
@@ -1693,6 +1715,7 @@
     const firstname = document.getElementById('modal-firstname').value.trim();
     const lastname  = document.getElementById('modal-lastname').value.trim();
     const email     = document.getElementById('modal-email').value.trim();
+    const visible   = document.getElementById('modal-visible').checked;
 
     if (!selectedTier || !firstname || !lastname || !email) {
       alert('Vul alle velden in en selecteer een tier.');
@@ -1711,30 +1734,17 @@
       amount = tierAmounts[selectedTier];
     }
 
-    const t = tiers[selectedTier];
-
-    // Sluit investeermodal, toon IBAN-instructies
-    closeModal();
-
-    document.getElementById('iban-naam').textContent = firstname + ' ' + lastname;
-    document.getElementById('iban-tier').textContent = t.label + ' — ' + t.type;
-    document.getElementById('iban-bedrag').textContent = '€' + amount.toLocaleString('nl-NL');
-    document.getElementById('iban-omschrijving').textContent = 'Bar THOKO – ' + t.label + ' – ' + firstname + ' ' + lastname;
-    document.getElementById('iban-modal').classList.add('open');
-
-    // Stuur gegevens naar Formspree
-    fetch('https://formspree.io/f/mreyjjvv', {
+    fetch('/.netlify/functions/create-payment', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        naam: firstname + ' ' + lastname,
-        email: email,
-        tier: t.label,
-        type: t.type,
-        bedrag: '€' + amount.toLocaleString('nl-NL'),
-        omschrijving: 'Bar THOKO – ' + t.label + ' – ' + firstname + ' ' + lastname
-      })
-    }).catch(function() {});
+      body: JSON.stringify({ tier: selectedTier, amount, firstname, lastname, email, visible })
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.checkoutUrl) window.location.href = data.checkoutUrl;
+      else alert('Fout: ' + (data.error || ''));
+    })
+    .catch(() => alert('Betaling kon niet worden gestart. Probeer het opnieuw.'));
   }
 
   // ── QUICK PAY LOGIC ──────────────────────────────────────────
@@ -1840,13 +1850,13 @@
     try {
       const res = await fetch('/.netlify/functions/invest');
       if (!res.ok) {
-        updateProgressUI(100000, 2);
+        updateProgressUI(108100, 6);
         return;
       }
       const data = await res.json();
       updateProgressUI(data.total || 100000, data.count || 2);
     } catch(e) {
-      updateProgressUI(100000, 2);
+      updateProgressUI(108100, 6);
     }
   }
 
@@ -1926,55 +1936,5 @@
 })();
 </script>
 
-
-  <style>
-    #iban-modal { display: none; position: fixed; inset: 0; background: rgba(26,23,18,0.88); z-index: 600; align-items: center; justify-content: center; }
-    #iban-modal.open { display: flex; }
-    .iban-box { background: var(--white); max-width: 500px; width: 90%; padding: 48px; position: relative; }
-    .iban-eyebrow { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; display: block; }
-    .iban-title { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 400; margin-bottom: 24px; }
-    .iban-row { display: flex; flex-direction: column; gap: 2px; padding: 14px 0; border-bottom: 1px solid var(--border); }
-    .iban-row:last-of-type { border-bottom: none; }
-    .iban-label { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); }
-    .iban-value { font-size: 14px; color: var(--ink); font-family: 'DM Mono', monospace; user-select: all; }
-    .iban-value.highlight { color: var(--accent); font-weight: 500; }
-    .iban-note { font-size: 10px; color: var(--muted); line-height: 1.8; margin-top: 20px; }
-    .iban-close { margin-top: 24px; background: var(--ink); color: var(--white); border: none; padding: 14px 24px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; width: 100%; }
-    .iban-close:hover { background: var(--accent); }
-  </style>
-
-<!-- IBAN MODAL -->
-<div id="iban-modal">
-  <div class="iban-box">
-    <span class="iban-eyebrow">Bar THOKO — Betaalinstructies</span>
-    <h2 class="iban-title">Maak je bedrag over</h2>
-    <div class="iban-row">
-      <span class="iban-label">Ten name van</span>
-      <span class="iban-value">K.M. Horecaonderneming</span>
-    </div>
-    <div class="iban-row">
-      <span class="iban-label">IBAN</span>
-      <span class="iban-value highlight">NL57ABNA0140797459</span>
-    </div>
-    <div class="iban-row">
-      <span class="iban-label">Bedrag</span>
-      <span class="iban-value highlight" id="iban-bedrag">—</span>
-    </div>
-    <div class="iban-row">
-      <span class="iban-label">Omschrijving</span>
-      <span class="iban-value" id="iban-omschrijving">—</span>
-    </div>
-    <div class="iban-row">
-      <span class="iban-label">Investeerder</span>
-      <span class="iban-value" id="iban-naam">—</span>
-    </div>
-    <div class="iban-row">
-      <span class="iban-label">Tier</span>
-      <span class="iban-value" id="iban-tier">—</span>
-    </div>
-    <p class="iban-note">Na ontvangst van je betaling sturen wij binnen 24 uur een bevestiging en je overeenkomst of tegoedbon per mail naar <strong id="iban-email-display"></strong>.</p>
-    <button class="iban-close" onclick="document.getElementById('iban-modal').classList.remove('open')">Sluiten</button>
-  </div>
-</div>
 </body>
 </html>
