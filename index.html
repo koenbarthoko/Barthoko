@@ -98,6 +98,17 @@
       color: var(--accent-light);
     }
 
+    .logo-description {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 320px;
+      margin-top: 16px;
+      border-left: 2px solid var(--accent);
+      padding-left: 12px;
+    }
+
     .hero-tagline {
       font-family: 'Cormorant Garamond', serif;
       font-size: 22px;
@@ -196,7 +207,7 @@
 
     .tier-options {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 6px;
     }
 
@@ -400,7 +411,7 @@
 
     .tiers-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 0;
       border: 1px solid var(--border);
       margin-top: 40px;
@@ -509,7 +520,7 @@
     /* SECOND ROW OF TIERS */
     .tiers-grid-row2 {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 0;
       border: 1px solid var(--border);
       border-top: none;
@@ -790,7 +801,7 @@
 
     .quickpay-tiers {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 6px;
       margin-top: 32px;
     }
@@ -1078,12 +1089,12 @@
     @media (max-width: 900px) {
       .quickpay-inner { grid-template-columns: 1fr; gap: 40px; }
       .quickpay-section { padding: 48px 32px; }
-      .quickpay-tiers { grid-template-columns: repeat(4, 1fr); }
+      .quickpay-tiers { grid-template-columns: repeat(3, 1fr); }
       .hero { grid-template-columns: 1fr; min-height: auto; }
       .hero-left { padding: 60px 32px; min-height: 40vh; }
       .hero-right { padding: 48px 32px; }
       .logo { font-size: 52px; }
-      .tier-options { grid-template-columns: repeat(4, 1fr); }
+      .tier-options { grid-template-columns: repeat(3, 1fr); }
       .tiers-grid, .tiers-grid-row2 { grid-template-columns: repeat(2, 1fr); }
       .tiers-section, .how-section, .footer-cta, .footer-note { padding-left: 32px; padding-right: 32px; }
       .section-divider { padding-left: 32px; padding-right: 32px; }
@@ -1092,104 +1103,8 @@
       .form-row { grid-template-columns: 1fr; }
     }
   </style>
-  <style>
-    #access-gate {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: #1a1712;
-      z-index: 9999;
-      align-items: center;
-      justify-content: center;
-    }
-    #access-gate.visible { display: flex; }
-    #access-gate-inner {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      max-width: 400px;
-      padding: 40px;
-    }
-    .gate-eyebrow {
-      font-size: 10px;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: #c4502a;
-      font-family: 'DM Mono', monospace;
-    }
-    .gate-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 48px;
-      font-weight: 300;
-      color: #faf8f4;
-      line-height: 1.0;
-    }
-    .gate-title em { font-style: italic; color: #e8957a; }
-    .gate-sub {
-      font-size: 11px;
-      color: #7a7468;
-      line-height: 1.8;
-      font-family: 'DM Mono', monospace;
-    }
-    .gate-error {
-      font-size: 10px;
-      color: #c4502a;
-      min-height: 14px;
-      font-family: 'DM Mono', monospace;
-    }
-    #page-content { display: none; }
-    #page-content.visible { display: block; }
-  </style>
 </head>
 <body>
-<!-- ACCESS GATE -->
-<div id="access-gate">
-  <div id="access-gate-inner">
-    <span class="gate-eyebrow">Bar Biloba — Nijmegen</span>
-    <div class="gate-title">Besloten<br/><em>ronde</em></div>
-    <p class="gate-sub">Vul de toegangscode in die je hebt ontvangen.</p>
-    <input
-      id="gate-input"
-      type="text"
-      placeholder="Toegangscode"
-      autocomplete="off"
-      style="
-        background: transparent;
-        border: 1px solid rgba(255,255,255,0.15);
-        border-bottom-color: #c4502a;
-        color: #faf8f4;
-        font-family: 'DM Mono', monospace;
-        font-size: 13px;
-        letter-spacing: 0.15em;
-        padding: 14px 16px;
-        outline: none;
-        width: 100%;
-        text-align: center;
-        text-transform: uppercase;
-      "
-      onkeydown="if(event.key==='Enter') checkCode()"
-    />
-    <button
-      onclick="checkCode()"
-      style="
-        background: #c4502a;
-        color: #faf8f4;
-        border: none;
-        padding: 14px 24px;
-        font-family: 'DM Mono', monospace;
-        font-size: 11px;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        cursor: pointer;
-        width: 100%;
-      "
-    >Toegang →</button>
-    <p class="gate-error" id="gate-error"></p>
-  </div>
-</div>
-
-<div id="page-content">
 
 <!-- HERO -->
 <section class="hero">
@@ -1197,6 +1112,7 @@
     <div class="logo-area">
       <span class="logo-eyebrow">Nijmegen — 2026</span>
       <div class="logo">Bar<br/><em>Biloba</em></div>
+      <p class="logo-description">Vernoemd naar de Ginkgo biloba, de Japanse notenboom waar de Hertogstraat vol mee staat. De naam verbindt de locatie direct aan de Japanse invloed die centraal staat in het concept.</p>
     </div>
 
     <p class="hero-tagline">Een all-day bar waar Nijmegen thuiskomt. Burgers, wijn, saké — en jij mede-oprichter.</p>
@@ -1232,16 +1148,8 @@
     <p class="cta-sub">Kies je tier, vul je gegevens in en rond af. Je hoort zo snel mogelijk van ons.</p>
 
     <div class="tier-selector">
-      <label>Kies je investering</label>
+      <label>Kies je investering — vanaf €500</label>
       <div class="tier-options">
-        <button class="tier-btn" data-tier="proever" onclick="selectTier(this)">
-          <span class="tier-amount">€100</span>
-          <span class="tier-label">Proever</span>
-        </button>
-        <button class="tier-btn" data-tier="vriend" onclick="selectTier(this)">
-          <span class="tier-amount">€250</span>
-          <span class="tier-label">Vriend</span>
-        </button>
         <button class="tier-btn" data-tier="supporter" onclick="selectTier(this)">
           <span class="tier-amount">€500</span>
           <span class="tier-label">Supporter</span>
@@ -1306,38 +1214,6 @@
 
 <section class="tiers-section">
   <div class="tiers-grid">
-    <div class="tier-card" onclick="scrollToForm('proever')">
-      <span class="tier-card-type">Tegoedbon</span>
-      <div>
-        <div class="tier-card-name">Proever</div>
-        <div class="tier-card-amount">€100</div>
-      </div>
-      <div class="tier-card-meta">
-        <strong>€120 consumptietegoed</strong>
-        Geen looptijd · Direct inzetbaar bij opening
-      </div>
-      <ul class="tier-card-rewards">
-        <li>Digitale tegoedbon op naam</li>
-        <li>Geen vervaldatum</li>
-      </ul>
-    </div>
-
-    <div class="tier-card" onclick="scrollToForm('vriend')">
-      <span class="tier-card-type">Tegoedbon</span>
-      <div>
-        <div class="tier-card-name">Vriend</div>
-        <div class="tier-card-amount">€250</div>
-      </div>
-      <div class="tier-card-meta">
-        <strong>€310 consumptietegoed</strong>
-        Geen looptijd · Direct inzetbaar bij opening
-      </div>
-      <ul class="tier-card-rewards">
-        <li>Digitale tegoedbon op naam</li>
-        <li>Geen vervaldatum</li>
-      </ul>
-    </div>
-
     <div class="tier-card" onclick="scrollToForm('supporter')">
       <span class="tier-card-type">Lening · 4% p/j</span>
       <div>
@@ -1367,9 +1243,7 @@
         <li>Uitnodiging openingsborrel</li>
       </ul>
     </div>
-  </div>
 
-  <div class="tiers-grid-row2">
     <div class="tier-card" onclick="scrollToForm('founding')">
       <span class="tier-card-type">Lening · 4% p/j</span>
       <div>
@@ -1385,7 +1259,9 @@
         <li>25% korting eerste bezoek</li>
       </ul>
     </div>
+  </div>
 
+  <div class="tiers-grid-row2">
     <div class="tier-card featured" onclick="scrollToForm('core')">
       <span class="tier-featured-badge">★ Populair</span>
       <span class="tier-card-type">Lening · 4% p/j</span>
@@ -1462,7 +1338,7 @@
       <span class="step-num">03</span>
       <div class="step-content">
         <h3>Teken de overeenkomst</h3>
-        <p>Lening-tiers ontvangen een leningsovereenkomst ter digitale ondertekening. Tegoedbon-tiers ontvangen direct hun bon.</p>
+        <p>Je ontvangt een leningsovereenkomst ter digitale ondertekening.</p>
       </div>
     </div>
     <div class="how-step">
@@ -1532,10 +1408,8 @@
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   const tiers = {
-    proever:   { label: 'Proever',   amount: '€100',   type: 'Tegoedbon', returnText: '€120 consumptietegoed', detail: 'Direct inzetbaar bij opening · Geen vervaldatum', rewards: [] },
-    vriend:    { label: 'Vriend',    amount: '€250',   type: 'Tegoedbon', returnText: '€310 consumptietegoed', detail: 'Direct inzetbaar bij opening · Geen vervaldatum', rewards: [] },
     supporter: { label: 'Supporter', amount: '€500',   type: 'Lening · 4% p/j', returnText: '€600 over 5 jaar', detail: 'Hoofdsom + rente gespreid terugbetaald per jaar', rewards: ['Uitnodiging openingsborrel'] },
     backer:    { label: 'Backer',    amount: '€750',   type: 'Lening · 4% p/j', returnText: '€900 over 5 jaar', detail: 'Hoofdsom + rente gespreid terugbetaald per jaar', rewards: ['Uitnodiging openingsborrel'] },
     founding:  { label: 'Founding',  amount: '€1.000', type: 'Lening · 4% p/j', returnText: '€1.200 over 5 jaar', detail: 'Hoofdsom + rente gespreid terugbetaald per jaar', rewards: ['Openingsborrel', '25% korting eerste bezoek'] },
@@ -1544,7 +1418,7 @@
     angel:     { label: 'Angel',     amount: '€5.000+', type: 'Lening · 4% p/j', returnText: '€6.000+ over 5 jaar', detail: 'Hoofdsom + rente gespreid terugbetaald per jaar', rewards: ['Alle Partner-voordelen', 'Persoonlijk contact Thomas & Koen', 'Jaarlijkse investor update'] }
   };
 
-  const tierAmounts = { proever: 100, vriend: 250, supporter: 500, backer: 750, founding: 1000, core: 1500, partner: 2500, angel: 5000 };
+  const tierAmounts = { supporter: 500, backer: 750, founding: 1000, core: 1500, partner: 2500, angel: 5000 };
 
   let selectedTier = null;
 
@@ -1722,8 +1596,6 @@
 
   // ── QUICK PAY LOGIC ──────────────────────────────────────────
   const qpTierData = {
-    proever:   { label: 'Proever',   amount: 100,  summary: '€100 → €120 consumptietegoed',   detail: 'Tegoedbon · geen looptijd · inzetbaar bij opening' },
-    vriend:    { label: 'Vriend',    amount: 250,  summary: '€250 → €310 consumptietegoed',   detail: 'Tegoedbon · geen looptijd · inzetbaar bij opening' },
     supporter: { label: 'Supporter', amount: 500,  summary: '€500 → €600 over 5 jaar',        detail: 'Lening · 4% p/j · openingsborrel' },
     backer:    { label: 'Backer',    amount: 750,  summary: '€750 → €900 over 5 jaar',        detail: 'Lening · 4% p/j · openingsborrel' },
     founding:  { label: 'Founding',  amount: 1000, summary: '€1.000 → €1.200 over 5 jaar',   detail: 'Lening · 4% p/j · openingsborrel + 25% korting eerste bezoek' },
@@ -1820,7 +1692,7 @@
   setInterval(fetchInvestors, 30000);
 
   async function fetchProgress() {
-    updateProgressUI(108100, 6);
+    updateProgressUI(119950, 10);
   }
 
   function updateProgressUI(total, count) {
@@ -1837,65 +1709,6 @@
   document.getElementById('modal').addEventListener('click', function(e) {
     if (e.target === this) closeModal();
   });
-</script>
-</div><!-- /page-content -->
-
-<script>
-(function() {
-  function showGate(msg) {
-    var el = document.getElementById('access-gate');
-    if (el) el.classList.add('visible');
-    if (msg) {
-      var err = document.getElementById('gate-error');
-      if (err) err.textContent = msg;
-    }
-  }
-  function showPage() {
-    var gate = document.getElementById('access-gate');
-    var page = document.getElementById('page-content');
-    if (gate) gate.classList.remove('visible');
-    if (page) page.classList.add('visible');
-  }
-
-  if (sessionStorage.getItem('thoko_access') === '1') {
-    showPage();
-    return;
-  }
-
-  showGate();
-
-  window.checkCode = function() {
-    var input = document.getElementById('gate-input');
-    var code = input ? input.value.trim().toUpperCase() : '';
-    var errEl = document.getElementById('gate-error');
-
-    if (!code) { errEl.textContent = 'Vul een toegangscode in.'; return; }
-
-    errEl.textContent = '';
-    input.disabled = true;
-
-    fetch('/.netlify/functions/validate-token', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token: code })
-    })
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      if (data.valid) {
-        sessionStorage.setItem('thoko_access', '1');
-        showPage();
-      } else {
-        errEl.textContent = 'Onjuiste toegangscode.';
-        input.disabled = false;
-        input.focus();
-      }
-    })
-    .catch(function() {
-      errEl.textContent = 'Kon niet verbinden. Probeer opnieuw.';
-      input.disabled = false;
-    });
-  };
-})();
 </script>
 
   <style>
@@ -1923,7 +1736,7 @@
     <div class="iban-row"><span class="iban-label">Omschrijving</span><span class="iban-value" id="iban-omschrijving">—</span></div>
     <div class="iban-row"><span class="iban-label">Investeerder</span><span class="iban-value" id="iban-naam">—</span></div>
     <div class="iban-row"><span class="iban-label">Tier</span><span class="iban-value" id="iban-tier">—</span></div>
-    <p class="iban-note">Na ontvangst van je betaling sturen wij binnen 24 uur een bevestiging en je overeenkomst of tegoedbon per mail.</p>
+    <p class="iban-note">Na ontvangst van je betaling sturen wij binnen 24 uur een bevestiging en je overeenkomst per mail.</p>
     <button class="iban-close" onclick="document.getElementById('iban-modal').classList.remove('open')">Sluiten</button>
   </div>
 </div>
