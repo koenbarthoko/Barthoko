@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Investeer in Bar THOKO</title>
+  <title>Investeer in Bar Biloba</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
@@ -1146,7 +1146,7 @@
 <!-- ACCESS GATE -->
 <div id="access-gate">
   <div id="access-gate-inner">
-    <span class="gate-eyebrow">Bar THOKO — Nijmegen</span>
+    <span class="gate-eyebrow">Bar Biloba — Nijmegen</span>
     <div class="gate-title">Besloten<br/><em>ronde</em></div>
     <p class="gate-sub">Vul de toegangscode in die je hebt ontvangen.</p>
     <input
@@ -1196,7 +1196,7 @@
   <div class="hero-left">
     <div class="logo-area">
       <span class="logo-eyebrow">Nijmegen — 2026</span>
-      <div class="logo">Bar<br/><em>THOKO</em></div>
+      <div class="logo">Bar<br/><em>Biloba</em></div>
     </div>
 
     <p class="hero-tagline">Een all-day bar waar Nijmegen thuiskomt. Burgers, wijn, saké — en jij mede-oprichter.</p>
@@ -1222,13 +1222,13 @@
     </div>
 
     <div class="hero-meta">
-      <span>Bar THOKO · Founding Round</span>
+      <span>Bar Biloba · Founding Round</span>
       <span>Thomas & Koen · <strong>Nijmegen</strong></span>
     </div>
   </div>
 
   <div class="hero-right">
-    <h2 class="cta-headline">Investeer in Bar THOKO</h2>
+    <h2 class="cta-headline">Investeer in Bar Biloba</h2>
     <p class="cta-sub">Kies je tier, vul je gegevens in en rond af. Je hoort zo snel mogelijk van ons.</p>
 
     <div class="tier-selector">
@@ -1481,7 +1481,7 @@
 <section class="investors-section">
   <div class="investors-header">
     <h2 class="investors-title">Zij doen<br/>al mee</h2>
-    <p class="investors-sub">Elke investeerder maakt Bar THOKO mogelijk. Jij ook?</p>
+    <p class="investors-sub">Elke investeerder maakt Bar Biloba mogelijk. Jij ook?</p>
   </div>
   <div class="investors-list" id="investors-list">
     <div class="investor-placeholder">Nog geen publieke investeerders — wees de eerste.</div>
@@ -1489,7 +1489,7 @@
 </section>
 
 <div class="footer-note">
-  <span>© Bar THOKO — Nijmegen</span>
+  <span>© Bar Biloba — Nijmegen</span>
   <span>Thomas & Koen · Founding Round 2026</span>
   <span>Vragen? <a href="/cdn-cgi/l/email-protection#553e3a303b15373427213d3a3e3a7b3b39"><span class="__cf_email__" data-cfemail="9df6f2f8f3ddfffcefe9f5f2f6f2b3f3f1">[email&#160;protected]</span></a></span>
 </div>
@@ -1553,11 +1553,9 @@
     btn.classList.add('active');
     selectedTier = btn.dataset.tier;
 
-    // Toon/verberg angel custom input
     const angelWrap = document.getElementById('angel-custom-wrap');
     if (selectedTier === 'angel') {
       angelWrap.classList.add('visible');
-      // Reset return display naar placeholder totdat bedrag ingevuld is
       const input = document.getElementById('angel-amount-input');
       if (input.value && parseInt(input.value) >= 5000) {
         updateAngelReturn(input.value);
@@ -1597,8 +1595,6 @@
       `;
       return;
     }
-    // Bereken totaal terugbetaald: hoofdsom + 4% per jaar over 5 jaar (aflopend)
-    // Jaar 1: n + n*0.04, Jaar 2: n*0.8 + n*0.8*0.04, etc. — simpele benadering: n * 1.12
     const total = Math.round(n * 1.12).toLocaleString('nl-NL');
     const formatted = n.toLocaleString('nl-NL');
     document.getElementById('return-display').innerHTML = `
@@ -1660,7 +1656,6 @@
 
       if (selectedTier === 'angel') {
         modalAngelWrap.classList.add('visible');
-        // Kopieer bedrag van hero input naar modal als al ingevuld
         const heroVal = document.getElementById('angel-amount-input').value;
         if (heroVal) {
           document.getElementById('modal-angel-amount').value = heroVal;
@@ -1688,7 +1683,6 @@
     document.getElementById('modal').classList.remove('open');
   }
 
-  // ── MODAL submitInvestment ────────────────────────────────────
   function submitInvestment() {
     const firstname = document.getElementById('modal-firstname').value.trim();
     const lastname  = document.getElementById('modal-lastname').value.trim();
@@ -1717,7 +1711,7 @@
     document.getElementById('iban-naam').textContent = firstname + ' ' + lastname;
     document.getElementById('iban-tier').textContent = t.label + ' — ' + t.type;
     document.getElementById('iban-bedrag').textContent = '€' + amount.toLocaleString('nl-NL');
-    document.getElementById('iban-omschrijving').textContent = 'Bar THOKO – ' + t.label + ' – ' + firstname + ' ' + lastname;
+    document.getElementById('iban-omschrijving').textContent = 'Bar Biloba – ' + t.label + ' – ' + firstname + ' ' + lastname;
     document.getElementById('iban-modal').classList.add('open');
     fetch('https://formspree.io/f/mreyjjvv', {
       method: 'POST',
@@ -1834,7 +1828,7 @@
     const pct = Math.min((total / goal) * 100, 100);
     document.getElementById('progress-fill').style.width = pct + '%';
     document.getElementById('progress-amount').textContent = '\u20ac' + total.toLocaleString('nl-NL');
-        document.getElementById('investor-count').textContent = count;
+    document.getElementById('investor-count').textContent = count;
   }
 
   fetchProgress();
@@ -1863,7 +1857,6 @@
     if (page) page.classList.add('visible');
   }
 
-  // Check session storage — blijf ingelogd zolang tabblad open is
   if (sessionStorage.getItem('thoko_access') === '1') {
     showPage();
     return;
@@ -1905,7 +1898,6 @@
 })();
 </script>
 
-
   <style>
     #iban-modal { display: none; position: fixed; inset: 0; background: rgba(26,23,18,0.88); z-index: 600; align-items: center; justify-content: center; }
     #iban-modal.open { display: flex; }
@@ -1923,7 +1915,7 @@
   </style>
 <div id="iban-modal">
   <div class="iban-box">
-    <span class="iban-eyebrow">Bar THOKO — Betaalinstructies</span>
+    <span class="iban-eyebrow">Bar Biloba — Betaalinstructies</span>
     <h2 class="iban-title">Maak je bedrag over</h2>
     <div class="iban-row"><span class="iban-label">Ten name van</span><span class="iban-value">K.M. Horecaonderneming</span></div>
     <div class="iban-row"><span class="iban-label">IBAN</span><span class="iban-value highlight">NL57ABNA0140797459</span></div>
