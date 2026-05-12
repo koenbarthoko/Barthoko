@@ -68,11 +68,7 @@
       background: var(--accent);
     }
 
-    .logo-area {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+    .logo-area { display: flex; flex-direction: column; gap: 6px; }
 
     .logo-eyebrow {
       font-family: 'DM Mono', monospace;
@@ -91,10 +87,7 @@
       letter-spacing: -0.02em;
     }
 
-    .logo em {
-      font-style: italic;
-      color: var(--accent-light);
-    }
+    .logo em { font-style: italic; color: var(--accent-light); }
 
     .logo-description {
       font-family: 'DM Mono', monospace;
@@ -117,11 +110,7 @@
       max-width: 340px;
     }
 
-    .hero-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
+    .hero-meta { display: flex; flex-direction: column; gap: 4px; }
 
     .hero-meta span {
       font-size: 10px;
@@ -130,16 +119,9 @@
       text-transform: uppercase;
     }
 
-    .hero-meta strong {
-      color: var(--accent-light);
-      font-weight: 400;
-    }
+    .hero-meta strong { color: var(--accent-light); font-weight: 400; }
 
-    .progress-block {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .progress-block { display: flex; flex-direction: column; gap: 10px; }
 
     .progress-label {
       display: flex;
@@ -148,11 +130,7 @@
       color: var(--cream);
     }
 
-    .progress-bar {
-      height: 2px;
-      background: rgba(255,255,255,0.1);
-      position: relative;
-    }
+    .progress-bar { height: 2px; background: rgba(255,255,255,0.1); position: relative; }
 
     .progress-fill {
       height: 100%;
@@ -179,18 +157,9 @@
       color: var(--ink);
     }
 
-    .cta-sub {
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.8;
-      max-width: 380px;
-    }
+    .cta-sub { font-size: 12px; color: var(--muted); line-height: 1.8; max-width: 380px; }
 
-    .tier-selector {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+    .tier-selector { display: flex; flex-direction: column; gap: 8px; }
 
     .tier-selector label {
       font-size: 10px;
@@ -201,11 +170,7 @@
       display: block;
     }
 
-    .tier-options {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
-    }
+    .tier-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
 
     .tier-btn {
       border: 1px solid var(--border);
@@ -248,18 +213,10 @@
     .return-detail { font-size: 11px; color: var(--muted); line-height: 1.7; }
     .return-rewards { margin-top: 4px; display: flex; flex-direction: column; gap: 3px; }
 
-    .reward-item {
-      font-size: 10px;
-      color: var(--ink);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
+    .reward-item { font-size: 10px; color: var(--ink); display: flex; align-items: center; gap: 8px; }
     .reward-item::before { content: '—'; color: var(--accent); font-size: 10px; }
 
     .invest-form { display: flex; flex-direction: column; gap: 12px; }
-
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
     .form-input {
@@ -292,7 +249,6 @@
     }
 
     .btn-invest:hover { background: var(--ink); }
-
     .form-disclaimer { font-size: 9px; color: var(--muted); line-height: 1.7; text-align: center; }
 
     /* DIVIDER */
@@ -312,12 +268,7 @@
     }
 
     .section-divider::before,
-    .section-divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
+    .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
     /* UPDATES SECTION */
     .updates-section {
@@ -339,12 +290,7 @@
 
     .update-block:last-child { border-right: none; }
 
-    .update-eyebrow {
-      font-size: 9px;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--accent);
-    }
+    .update-eyebrow { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); }
 
     .update-title {
       font-family: 'Cormorant Garamond', serif;
@@ -354,17 +300,8 @@
       color: var(--ink);
     }
 
-    .update-title em {
-      font-style: italic;
-      color: var(--accent);
-    }
-
-    .update-body {
-      font-size: 11px;
-      color: var(--muted);
-      line-height: 1.9;
-      max-width: 380px;
-    }
+    .update-title em { font-style: italic; color: var(--accent); }
+    .update-body { font-size: 11px; color: var(--muted); line-height: 1.9; max-width: 380px; }
 
     .update-tag {
       display: inline-flex;
@@ -379,11 +316,7 @@
       align-self: flex-start;
     }
 
-    .update-tag::before {
-      content: '✓';
-      color: var(--accent);
-      font-size: 10px;
-    }
+    .update-tag::before { content: '✓'; color: var(--accent); font-size: 10px; }
 
     /* TIER TABLE */
     .tiers-section { padding: 40px 80px 80px; }
@@ -408,7 +341,6 @@
 
     .tier-card:last-child { border-right: none; }
     .tier-card:hover { background: var(--cream); }
-
     .tier-card.featured { background: var(--ink); color: var(--white); }
     .tier-card.featured .tier-card-name,
     .tier-card.featured .tier-card-amount,
@@ -440,13 +372,7 @@
 
     .tier-card-rewards { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-top: auto; }
 
-    .tier-card-rewards li {
-      font-size: 10px;
-      color: var(--muted);
-      padding-left: 14px;
-      position: relative;
-    }
-
+    .tier-card-rewards li { font-size: 10px; color: var(--muted); padding-left: 14px; position: relative; }
     .tier-card-rewards li::before { content: '—'; position: absolute; left: 0; color: var(--accent); }
     .tier-card.featured .tier-card-rewards li { color: var(--cream); }
 
@@ -572,18 +498,6 @@
     .modal-angel-hint { font-size: 9px; color: var(--muted); margin-top: 4px; }
     .modal-disclaimer { font-size: 9px; color: var(--muted); line-height: 1.7; text-align: center; margin-top: 6px; }
 
-    .visibility-label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 11px;
-      color: var(--muted);
-      cursor: pointer;
-      padding: 4px 0;
-    }
-
-    .visibility-label input[type="checkbox"] { width: 14px; height: 14px; accent-color: var(--accent); cursor: pointer; }
-
     /* ANIMATIONS */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
@@ -603,6 +517,89 @@
     .hero-right > *:nth-child(4) { animation-delay: 0.6s; }
     .hero-right > *:nth-child(5) { animation-delay: 0.7s; }
     .hero-right > *:nth-child(6) { animation-delay: 0.8s; }
+
+    /* IBAN MODAL */
+    #iban-modal { display: none; position: fixed; inset: 0; background: rgba(26,23,18,0.88); z-index: 600; align-items: center; justify-content: center; }
+    #iban-modal.open { display: flex; }
+    .iban-box { background: var(--white); max-width: 500px; width: 90%; padding: 48px; position: relative; }
+    .iban-eyebrow { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; display: block; }
+    .iban-title { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 400; margin-bottom: 24px; }
+    .iban-row { display: flex; flex-direction: column; gap: 2px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+    .iban-row:last-of-type { border-bottom: none; }
+    .iban-label { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); }
+    .iban-value { font-size: 14px; color: var(--ink); font-family: 'DM Mono', monospace; user-select: all; }
+    .iban-value.highlight { color: var(--accent); font-weight: 500; }
+    .iban-note { font-size: 10px; color: var(--muted); line-height: 1.8; margin-top: 20px; }
+    .iban-close { margin-top: 24px; background: var(--ink); color: var(--white); border: none; padding: 14px 24px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; width: 100%; }
+    .iban-close:hover { background: var(--accent); }
+
+    /* THANK YOU MODAL */
+    #thankyou-modal { display: none; position: fixed; inset: 0; background: rgba(26,23,18,0.92); z-index: 700; align-items: center; justify-content: center; }
+    #thankyou-modal.open { display: flex; }
+
+    .thankyou-box {
+      background: var(--ink);
+      max-width: 480px;
+      width: 90%;
+      padding: 60px 48px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      border-top: 2px solid var(--accent);
+    }
+
+    .thankyou-eyebrow {
+      font-size: 9px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-family: 'DM Mono', monospace;
+    }
+
+    .thankyou-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 38px;
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1.1;
+    }
+
+    .thankyou-title em {
+      font-style: italic;
+      color: var(--accent-light);
+    }
+
+    .thankyou-body {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.9;
+      max-width: 360px;
+    }
+
+    .thankyou-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .thankyou-close {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 14px 24px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.15s;
+    }
+
+    .thankyou-close:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
 
     /* RESPONSIVE */
     @media (max-width: 900px) {
@@ -886,7 +883,7 @@
   <span>Vragen? <a href="/cdn-cgi/l/email-protection#553e3a303b15373427213d3a3e3a7b3b39"><span class="__cf_email__" data-cfemail="9df6f2f8f3ddfffcefe9f5f2f6f2b3f3f1">[email&#160;protected]</span></a></span>
 </div>
 
-<!-- MODAL -->
+<!-- BEVESTIGINGSMODAL -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
@@ -916,6 +913,34 @@
       <button class="btn-invest" onclick="submitInvestment()">Bevestig investering →</button>
       <p class="modal-disclaimer">Na bevestiging ontvang je de betaalinstructies getoond in het venster. Betaling via bankoverschrijving.</p>
     </div>
+  </div>
+</div>
+
+<!-- IBAN MODAL -->
+<div id="iban-modal">
+  <div class="iban-box">
+    <span class="iban-eyebrow">Bar Biloba — Betaalinstructies</span>
+    <h2 class="iban-title">Maak je bedrag over</h2>
+    <div class="iban-row"><span class="iban-label">Ten name van</span><span class="iban-value">K.M. Horecaonderneming</span></div>
+    <div class="iban-row"><span class="iban-label">IBAN</span><span class="iban-value highlight">NL57ABNA0140797459</span></div>
+    <div class="iban-row"><span class="iban-label">Bedrag</span><span class="iban-value highlight" id="iban-bedrag">—</span></div>
+    <div class="iban-row"><span class="iban-label">Omschrijving</span><span class="iban-value" id="iban-omschrijving">—</span></div>
+    <div class="iban-row"><span class="iban-label">Investeerder</span><span class="iban-value" id="iban-naam">—</span></div>
+    <div class="iban-row"><span class="iban-label">Tier</span><span class="iban-value" id="iban-tier">—</span></div>
+    <p class="iban-note">Maak het bedrag over met bovenstaande gegevens. Klik daarna op de knop hieronder om te bevestigen.</p>
+    <button class="iban-close" onclick="openThankYou()">Ik heb het bedrag overgemaakt →</button>
+  </div>
+</div>
+
+<!-- BEDANKVENSTER -->
+<div id="thankyou-modal">
+  <div class="thankyou-box">
+    <span class="thankyou-eyebrow">Bar Biloba — Founding Round</span>
+    <h2 class="thankyou-title">Bedankt voor je<br/><em>investering</em></h2>
+    <div class="thankyou-divider"></div>
+    <p class="thankyou-body">We waarderen je vertrouwen in onze droom enorm. Je hoort zo spoedig mogelijk van ons via de mail — met de bevestiging en de verdere stappen.<br/><br/>Tot snel op de Hertogstraat.<br/>Thomas & Koen</p>
+    <div class="thankyou-divider"></div>
+    <button class="thankyou-close" onclick="closeThankYou()">Venster sluiten</button>
   </div>
 </div>
 
@@ -1099,6 +1124,15 @@
     }).catch(function() {});
   }
 
+  function openThankYou() {
+    document.getElementById('iban-modal').classList.remove('open');
+    document.getElementById('thankyou-modal').classList.add('open');
+  }
+
+  function closeThankYou() {
+    document.getElementById('thankyou-modal').classList.remove('open');
+  }
+
   function updateProgressUI(total, count) {
     const goal = 250000;
     const pct = Math.min((total / goal) * 100, 100);
@@ -1113,37 +1147,6 @@
     if (e.target === this) closeModal();
   });
 </script>
-
-  <style>
-    #iban-modal { display: none; position: fixed; inset: 0; background: rgba(26,23,18,0.88); z-index: 600; align-items: center; justify-content: center; }
-    #iban-modal.open { display: flex; }
-    .iban-box { background: var(--white); max-width: 500px; width: 90%; padding: 48px; position: relative; }
-    .iban-eyebrow { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; display: block; }
-    .iban-title { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 400; margin-bottom: 24px; }
-    .iban-row { display: flex; flex-direction: column; gap: 2px; padding: 14px 0; border-bottom: 1px solid var(--border); }
-    .iban-row:last-of-type { border-bottom: none; }
-    .iban-label { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); }
-    .iban-value { font-size: 14px; color: var(--ink); font-family: 'DM Mono', monospace; user-select: all; }
-    .iban-value.highlight { color: var(--accent); font-weight: 500; }
-    .iban-note { font-size: 10px; color: var(--muted); line-height: 1.8; margin-top: 20px; }
-    .iban-close { margin-top: 24px; background: var(--ink); color: var(--white); border: none; padding: 14px 24px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; width: 100%; }
-    .iban-close:hover { background: var(--accent); }
-  </style>
-
-<div id="iban-modal">
-  <div class="iban-box">
-    <span class="iban-eyebrow">Bar Biloba — Betaalinstructies</span>
-    <h2 class="iban-title">Maak je bedrag over</h2>
-    <div class="iban-row"><span class="iban-label">Ten name van</span><span class="iban-value">K.M. Horecaonderneming</span></div>
-    <div class="iban-row"><span class="iban-label">IBAN</span><span class="iban-value highlight">NL57ABNA0140797459</span></div>
-    <div class="iban-row"><span class="iban-label">Bedrag</span><span class="iban-value highlight" id="iban-bedrag">—</span></div>
-    <div class="iban-row"><span class="iban-label">Omschrijving</span><span class="iban-value" id="iban-omschrijving">—</span></div>
-    <div class="iban-row"><span class="iban-label">Investeerder</span><span class="iban-value" id="iban-naam">—</span></div>
-    <div class="iban-row"><span class="iban-label">Tier</span><span class="iban-value" id="iban-tier">—</span></div>
-    <p class="iban-note">Na ontvangst van je betaling sturen wij binnen 24 uur een bevestiging en je overeenkomst per mail.</p>
-    <button class="iban-close" onclick="document.getElementById('iban-modal').classList.remove('open')">Sluiten</button>
-  </div>
-</div>
 
 </body>
 </html>
