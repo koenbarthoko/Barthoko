@@ -371,7 +371,6 @@
     }
 
     .tier-card-rewards { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-top: auto; }
-
     .tier-card-rewards li { font-size: 10px; color: var(--muted); padding-left: 14px; position: relative; }
     .tier-card-rewards li::before { content: '—'; position: absolute; left: 0; color: var(--accent); }
     .tier-card.featured .tier-card-rewards li { color: var(--cream); }
@@ -498,26 +497,6 @@
     .modal-angel-hint { font-size: 9px; color: var(--muted); margin-top: 4px; }
     .modal-disclaimer { font-size: 9px; color: var(--muted); line-height: 1.7; text-align: center; margin-top: 6px; }
 
-    /* ANIMATIONS */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .hero-left > * { animation: fadeUp 0.6s ease forwards; opacity: 0; }
-    .hero-left > *:nth-child(1) { animation-delay: 0.1s; }
-    .hero-left > *:nth-child(2) { animation-delay: 0.25s; }
-    .hero-left > *:nth-child(3) { animation-delay: 0.4s; }
-    .hero-left > *:nth-child(4) { animation-delay: 0.55s; }
-
-    .hero-right > * { animation: fadeUp 0.6s ease forwards; opacity: 0; }
-    .hero-right > *:nth-child(1) { animation-delay: 0.3s; }
-    .hero-right > *:nth-child(2) { animation-delay: 0.4s; }
-    .hero-right > *:nth-child(3) { animation-delay: 0.5s; }
-    .hero-right > *:nth-child(4) { animation-delay: 0.6s; }
-    .hero-right > *:nth-child(5) { animation-delay: 0.7s; }
-    .hero-right > *:nth-child(6) { animation-delay: 0.8s; }
-
     /* IBAN MODAL */
     #iban-modal { display: none; position: fixed; inset: 0; background: rgba(26,23,18,0.88); z-index: 600; align-items: center; justify-content: center; }
     #iban-modal.open { display: flex; }
@@ -549,13 +528,7 @@
       border-top: 2px solid var(--accent);
     }
 
-    .thankyou-eyebrow {
-      font-size: 9px;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-family: 'DM Mono', monospace;
-    }
+    .thankyou-eyebrow { font-size: 9px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--accent); font-family: 'DM Mono', monospace; }
 
     .thankyou-title {
       font-family: 'Cormorant Garamond', serif;
@@ -565,22 +538,9 @@
       line-height: 1.1;
     }
 
-    .thankyou-title em {
-      font-style: italic;
-      color: var(--accent-light);
-    }
-
-    .thankyou-body {
-      font-size: 11px;
-      color: var(--muted);
-      line-height: 1.9;
-      max-width: 360px;
-    }
-
-    .thankyou-divider {
-      height: 1px;
-      background: rgba(255,255,255,0.08);
-    }
+    .thankyou-title em { font-style: italic; color: var(--accent-light); }
+    .thankyou-body { font-size: 11px; color: var(--muted); line-height: 1.9; max-width: 360px; }
+    .thankyou-divider { height: 1px; background: rgba(255,255,255,0.08); }
 
     .thankyou-close {
       background: transparent;
@@ -596,10 +556,27 @@
       transition: all 0.15s;
     }
 
-    .thankyou-close:hover {
-      background: var(--accent);
-      border-color: var(--accent);
+    .thankyou-close:hover { background: var(--accent); border-color: var(--accent); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
+
+    .hero-left > * { animation: fadeUp 0.6s ease forwards; opacity: 0; }
+    .hero-left > *:nth-child(1) { animation-delay: 0.1s; }
+    .hero-left > *:nth-child(2) { animation-delay: 0.25s; }
+    .hero-left > *:nth-child(3) { animation-delay: 0.4s; }
+    .hero-left > *:nth-child(4) { animation-delay: 0.55s; }
+
+    .hero-right > * { animation: fadeUp 0.6s ease forwards; opacity: 0; }
+    .hero-right > *:nth-child(1) { animation-delay: 0.3s; }
+    .hero-right > *:nth-child(2) { animation-delay: 0.4s; }
+    .hero-right > *:nth-child(3) { animation-delay: 0.5s; }
+    .hero-right > *:nth-child(4) { animation-delay: 0.6s; }
+    .hero-right > *:nth-child(5) { animation-delay: 0.7s; }
+    .hero-right > *:nth-child(6) { animation-delay: 0.8s; }
 
     /* RESPONSIVE */
     @media (max-width: 900px) {
@@ -880,7 +857,6 @@
 <div class="footer-note">
   <span>© Bar Biloba — Nijmegen</span>
   <span>Thomas & Koen · Founding Round 2026</span>
-  <span>Vragen? <a href="/cdn-cgi/l/email-protection#553e3a303b15373427213d3a3e3a7b3b39"><span class="__cf_email__" data-cfemail="9df6f2f8f3ddfffcefe9f5f2f6f2b3f3f1">[email&#160;protected]</span></a></span>
 </div>
 
 <!-- BEVESTIGINGSMODAL -->
